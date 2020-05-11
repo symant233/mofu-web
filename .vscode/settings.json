@@ -1,0 +1,11 @@
+{
+    "editor.tabSize": 2,
+    "[vue]": {
+        "editor.formatOnSave": true
+    },
+    "[javascript]": {
+        "editor.formatOnSave": true
+    },
+    "rest-client.enableCustomVariableReferencesCodeLens": false,
+    "prettier.vueIndentScriptAndStyle": true
+}
