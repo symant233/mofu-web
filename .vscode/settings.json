@@ -7,5 +7,6 @@
         "editor.formatOnSave": true
     },
     "rest-client.enableCustomVariableReferencesCodeLens": false,
-    "prettier.vueIndentScriptAndStyle": true
+    "prettier.vueIndentScriptAndStyle": true,
+    "files.eol": "\n"
 }
