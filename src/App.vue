@@ -10,4 +10,17 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+html {
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
+#app {
+  height: 100vh;
+}
+.fullheight {
+  height: 100vh;
+}
+</style>

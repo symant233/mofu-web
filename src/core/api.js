@@ -6,15 +6,42 @@ class Api {
     this.api = axios.create({
       baseURL: this.BASE,
       timeout: 6000,
+      // 请求头发送 cookies
+      withCredentials: true,
     });
   }
+
+  warn = (err) => {
+    if (!err.response) console.warn(err);
+    else console.warn(err.response.status, err.response.data);
+  };
 
   login = async (email, passwd) => {
     const rs = await this.api.post('/auth/login', {
       email,
       passwd,
     });
-    return rs;
+    return rs.data;
+  };
+
+  myDetail = async () => {
+    const rs = await this.api.get('/user/@me/detail');
+    return rs.data;
+  };
+
+  myGroups = async () => {
+    const rs = await this.api.get('/group/@me');
+    return rs.data;
+  };
+
+  groupDetail = async (groupId) => {
+    const rs = await this.api.get(`/group/${groupId}/detail`);
+    return rs.data;
+  };
+
+  listGroupMessages = async (groupId) => {
+    const rs = await this.api.get(`/group/${groupId}/messages?limit=50`);
+    return rs.data;
   };
 }
 

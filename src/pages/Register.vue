@@ -1,5 +1,5 @@
 <template>
-  <box class="container">
+  <div class="container">
     <h2 class="title is-3 has-text-centered has-text-weight-bold">Register</h2>
 
     <!-- Username/Email -->
@@ -57,7 +57,7 @@
         </label>
       </div>
     </div>
-  </box>
+  </div>
 </template>
 
 <script>

@@ -9,22 +9,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: '/login',
+      name: 'try-auth',
+      component: require('@/components/TryAuth').default,
     },
     {
       path: '/login',
       name: 'mofu-login',
-      component: require('@/components/Login').default,
+      component: require('@/pages/Login').default,
     },
     {
       path: '/register',
       name: 'mofu-register',
-      component: require('@/components/Register').default,
+      component: require('@/pages/Register').default,
     },
     {
-      path: '/app',
+      path: '/chats/:channel',
       name: 'mofu-chat',
-      component: require('@/components/Chat').default,
+      component: require('@/pages/Chat').default,
     },
   ],
 });
