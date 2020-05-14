@@ -1,43 +1,48 @@
 <template>
   <div id="context" class="fullheight">
-    <div id="group">
-      <span>{{ groups[current].name }}</span>
-    </div>
-    <div id="messages">
-      <div v-for="msg in msgs[current]" :key="msg.id" id="message">
-        <article class="media">
-          <figure class="media-left">
-            <p class="image is-48x48">
-              <img :src="msg.author.avatar || '/static/images/akari.jpg'" />
-            </p>
-          </figure>
-          <div class="media-content">
-            <div class="content">
-              <p>
-                <strong>{{ msg.author.nick }}</strong>
-                <small style="font-size: 0.775em;">{{ msg.timestamp }}</small>
-                <br />
-                {{ msg.content }}
-              </p>
-            </div>
-          </div>
-        </article>
+    <group-title :group="groups[current]"></group-title>
+    <message-box :msgs="msgs[current]"></message-box>
+
+    <div id="input" class="field has-addons">
+      <div class="control is-expanded">
+        <input
+          class="input"
+          type="text"
+          placeholder="Text..."
+          v-model="newMessage"
+          @keyup.enter="createMessage"
+          :disabled="inputDisabled"
+        />
+      </div>
+      <div class="control">
+        <a
+          class="button is-info"
+          @click="createMessage"
+          :disabled="inputDisabled"
+        >
+          Enter
+        </a>
       </div>
     </div>
-    <div id="input">aaa</div>
   </div>
 </template>
 
 <script>
 import api from '../core/api';
+import socket from '../core/socket';
+import GroupTitle from '../components/Context/GroupTitle';
+import MessageBox from '../components/Context/MessageBox';
 
 export default {
   name: 'context',
+  components: { GroupTitle, MessageBox },
   data() {
     return {
       current: this.$route.params.channel,
       msgs: {},
       groups: {},
+      newMessage: '',
+      inputDisabled: false,
     };
   },
   methods: {
@@ -62,8 +67,29 @@ export default {
         const rs = await api.groupDetail(this.current);
         this.$set(this.groups, this.current, rs);
       } catch (err) {
+        if (err.response.status === 401) {
+          this.$router.push({ name: 'mofu-login' });
+        }
         api.warn(err);
       }
+    },
+    async createMessage() {
+      this.inputDisabled = true;
+      try {
+        const rs = await api.createGroupMessage(this.current, this.newMessage);
+        // rs returns message object
+        this.newMessage = '';
+        this.inputDisabled = false;
+      } catch (err) {
+        api.warn(err);
+        this.inputDisabled = false;
+      }
+    },
+    listenMessages() {
+      socket.on('new msg', (data) => {
+        // socket 收到新消息 推入组件消息存储中
+        this.msgs[this.current].push(data);
+      });
     },
   },
   beforeMount() {
@@ -72,31 +98,25 @@ export default {
     this.groupDetail();
     this.listGroupMessages();
   },
+  mounted() {
+    const token = this.$cookie.get('token');
+    if (!token) console.error('cookie: token empty');
+    socket.emit('auth', token);
+    this.socket = socket;
+    this.listenMessages();
+  },
 };
 </script>
 
 <style>
-#group {
-  padding: 13px;
-  font-weight: bold;
-  box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05),
-    0 2px 0 rgba(4, 4, 5, 0.05);
-}
-
 #context {
-  min-width: 678px;
+  min-width: 600px;
   width: 55%;
 }
 
-#messages {
-  width: 100%;
-  height: 100%;
-}
-
-#message {
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+#context #input {
+  min-width: 600px;
+  width: 55%;
 }
 
 #input {

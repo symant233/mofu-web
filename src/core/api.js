@@ -5,7 +5,7 @@ class Api {
     this.BASE = 'http://localhost:3000/api/v1';
     this.api = axios.create({
       baseURL: this.BASE,
-      timeout: 6000,
+      timeout: 5000,
       // 请求头发送 cookies
       withCredentials: true,
     });
@@ -41,6 +41,13 @@ class Api {
 
   listGroupMessages = async (groupId) => {
     const rs = await this.api.get(`/group/${groupId}/messages?limit=50`);
+    return rs.data;
+  };
+
+  createGroupMessage = async (groupId, content) => {
+    const rs = await this.api.post(`/group/${groupId}/message`, {
+      content,
+    });
     return rs.data;
   };
 }

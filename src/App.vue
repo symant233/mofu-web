@@ -21,6 +21,6 @@ body {
   height: 100vh;
 }
 .fullheight {
-  height: 100vh;
+  min-height: 100vh;
 }
 </style>

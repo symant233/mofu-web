@@ -88,8 +88,9 @@ export default {
     async login() {
       try {
         const rs = await api.login(this.email, this.passwd);
-        document.cookie = `token=${rs.token}`;
-        console.info('login succeed, cookie set.');
+        // document.cookie = `token=${rs.token}`;
+        this.$cookie.set('token', rs.token);
+        console.info('-> login succeed, cookie set.');
         this.invalid = false;
         this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
       } catch (err) {
