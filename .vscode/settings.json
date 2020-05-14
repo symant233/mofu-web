@@ -8,5 +8,4 @@
     },
     "rest-client.enableCustomVariableReferencesCodeLens": false,
     "prettier.vueIndentScriptAndStyle": true,
-    "files.eol": "\n"
 }
