@@ -1,5 +1,5 @@
 <template>
-  <div id="group">
+  <div id="group" v-if="group">
     <span>{{ group ? group.name : null }}</span>
   </div>
 </template>

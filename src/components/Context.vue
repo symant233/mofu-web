@@ -47,6 +47,7 @@ export default {
   },
   methods: {
     async listGroupMessages() {
+      // 获取群组最近消息 (默认的最多50条)
       if (this.msgs[this.current] !== undefined) {
         console.log('msgs[current] !== undefined');
         return;
@@ -59,6 +60,7 @@ export default {
       }
     },
     async groupDetail() {
+      // 获取当前群组详情
       if (this.groups[this.current] !== undefined) {
         console.log('groups[current] !== undefined');
         return;
@@ -74,11 +76,13 @@ export default {
       }
     },
     async createMessage() {
+      // 用户发送消息
+      if (!this.newMessage) return; // 禁止发送空内容
       this.inputDisabled = true;
       try {
         const rs = await api.createGroupMessage(this.current, this.newMessage);
         // rs returns message object
-        this.newMessage = '';
+        this.newMessage = ''; // 成功后清空输入框
         this.inputDisabled = false;
       } catch (err) {
         api.warn(err);
@@ -97,25 +101,21 @@ export default {
     if (this.current === '@me') return;
     this.groupDetail();
     this.listGroupMessages();
-  },
-  mounted() {
-    const token = this.$cookie.get('token');
-    if (!token) console.error('cookie: token empty');
-    socket.emit('auth', token);
-    this.socket = socket;
-    this.listenMessages();
+    this.listenMessages(); // socket 监听
   },
 };
 </script>
 
 <style>
 #context {
-  min-width: 600px;
+  /* min-width: 600px; */
   width: 55%;
+  height: 100%;
+  float: left;
 }
 
 #context #input {
-  min-width: 600px;
+  /* min-width: 600px; */
   width: 55%;
 }
 

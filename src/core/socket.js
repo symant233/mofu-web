@@ -1,7 +1,7 @@
 import IO from 'socket.io-client';
 import { WS } from './constants';
 
-const url = `${WS}/messages`;
+const url = `${WS}/msg`;
 
 const msg = IO(url);
 msg.on('auth', (data) => {

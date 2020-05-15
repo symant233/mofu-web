@@ -13,6 +13,7 @@ export default {
 <style>
 html {
   height: 100%;
+  overflow: hidden;
 }
 body {
   min-height: 100%;
