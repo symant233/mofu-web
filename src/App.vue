@@ -24,4 +24,8 @@ body {
 .fullheight {
   min-height: 100vh;
 }
+::selection {
+  background-color: #32d0b0;
+  color: #ffffff;
+}
 </style>

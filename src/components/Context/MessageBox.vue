@@ -63,7 +63,7 @@ export default {
   height: calc(100% - 103px);
   min-height: 0;
   flex: 1 1 auto;
-  margin-top: 2.2px;
+  margin-top: 1.5px;
   margin-left: 0;
 }
 .scrollbar {
@@ -108,6 +108,8 @@ export default {
 .message-content {
   word-wrap: break-word;
   word-break: break-all;
+}
+#message.message-content {
   padding-right: 30px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div id="context" class="fullheight">
-    <group-title :group="groups[current]"></group-title>
+    <group-title :group="group"></group-title>
     <message-box :msgs="msgs[current]"></message-box>
 
     <div id="input" class="field has-addons">
@@ -24,6 +24,8 @@
         </a>
       </div>
     </div>
+    <wumpus :wumpus="wumpus"></wumpus>
+    <warning :show="showWarning" :warn="warnMessage"></warning>
   </div>
 </template>
 
@@ -32,18 +34,25 @@ import api from '../core/api';
 import socket from '../core/socket';
 import GroupTitle from '../components/Context/GroupTitle';
 import MessageBox from '../components/Context/MessageBox';
+import Warning from './Warning';
+import Wumpus from './Context/Wumpus';
 
 export default {
   name: 'context',
-  components: { GroupTitle, MessageBox },
+  components: { GroupTitle, MessageBox, Warning, Wumpus },
   data() {
     return {
       current: this.$route.params.channel,
       msgs: {},
-      groups: {},
       newMessage: '',
       inputDisabled: false,
+      showWarning: false,
+      warnMessage: '',
+      wumpus: false,
     };
+  },
+  props: {
+    group: Object,
   },
   methods: {
     async listGroupMessages() {
@@ -56,22 +65,6 @@ export default {
         const rs = await api.listGroupMessages(this.current);
         this.$set(this.msgs, this.current, rs);
       } catch (err) {
-        api.warn(err);
-      }
-    },
-    async groupDetail() {
-      // 获取当前群组详情
-      if (this.groups[this.current] !== undefined) {
-        console.log('groups[current] !== undefined');
-        return;
-      }
-      try {
-        const rs = await api.groupDetail(this.current);
-        this.$set(this.groups, this.current, rs);
-      } catch (err) {
-        if (err.response.status === 401) {
-          this.$router.push({ name: 'mofu-login' });
-        }
         api.warn(err);
       }
     },
@@ -98,8 +91,10 @@ export default {
   },
   beforeMount() {
     console.info('channel->', this.current);
-    if (this.current === '@me') return;
-    this.groupDetail();
+    if (this.current === '@me') {
+      this.wumpus = true;
+      return;
+    }
     this.listGroupMessages();
     this.listenMessages(); // socket 监听
   },
@@ -123,5 +118,9 @@ export default {
   padding: 13px;
   position: fixed;
   bottom: 0px;
+}
+
+#input.field:not(:last-child) {
+  margin-bottom: 0;
 }
 </style>

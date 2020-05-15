@@ -1,6 +1,6 @@
 <template>
-  <div id="group" v-if="group">
-    <span>{{ group ? group.name : null }}</span>
+  <div id="group">
+    <span>{{ group ? group.name : '@me' }}</span>
   </div>
 </template>
 
