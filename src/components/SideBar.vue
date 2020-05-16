@@ -1,7 +1,7 @@
 <template>
   <div id="side-bar">
-    <side-search></side-search>
-    <div id="side-groups">
+    <side-search :user="user"></side-search>
+    <div id="side-groups" class="scrollbar">
       <div v-for="g in groups" :key="g.id" id="message">
         <article class="media" @click="routing(g.id)">
           <figure class="media-left">
@@ -12,9 +12,7 @@
           <div class="media-content">
             <div class="content message-content">
               <p>
-                <strong>{{ g.name }}</strong
-                ><br />
-                {{ g.since }}
+                <strong>{{ g.name }}</strong>
               </p>
             </div>
           </div>
@@ -26,17 +24,29 @@
 
 <script>
 import SideSearch from './SideBar/SideSearch';
+import api from '../core/api';
 
 export default {
   name: 'side-bar',
   components: { SideSearch },
+  data() {
+    return {
+      user: {},
+    };
+  },
   props: {
     groups: Array,
   },
   methods: {
+    async myDetail() {
+      this.user = await api.myDetail();
+    },
     routing(groupId) {
       this.$router.push({ name: 'mofu-chat', params: { channel: groupId } });
     },
+  },
+  mounted() {
+    if (!this.user.id) this.myDetail();
   },
 };
 </script>
@@ -47,5 +57,10 @@ export default {
   float: left;
   background-color: #f2f3f5;
   width: 25%;
+}
+#side-groups {
+  width: 100%;
+  margin-left: 0;
+  height: calc(100% - 55px);
 }
 </style>

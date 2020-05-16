@@ -66,6 +66,9 @@ export default {
         this.showWarning = false;
       }, 5600);
     },
+    $route(to, from) {
+      this.current = to.params.channel;
+    },
   },
 };
 </script>

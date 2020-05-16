@@ -1,13 +1,15 @@
 <template>
   <div id="side-search">
-    <span>test</span>
+    <span>{{ user.nick }}</span>
   </div>
 </template>
 
 <script>
 export default {
   name: 'side-search',
-  props: {},
+  props: {
+    user: Object,
+  },
 };
 </script>
 

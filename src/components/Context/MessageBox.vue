@@ -1,7 +1,7 @@
 <template>
-  <div id="messages" class="scrollbar">
+  <div id="messages" class="scrollbar" :key="current">
     <div v-for="msg in msgs" :key="msg.id" id="message">
-      <article class="media" v-if="msg.channel === current">
+      <article class="media">
         <figure class="media-left">
           <p class="image is-48x48">
             <img :src="msg.author.avatar || '/static/images/akari.jpg'" />
@@ -54,6 +54,11 @@ export default {
       });
     }
   },
+  watch: {
+    $route() {
+      this.current = this.$route.params.channel;
+    },
+  },
 };
 </script>
 
@@ -63,27 +68,23 @@ export default {
   height: calc(100% - 103px);
   min-height: 0;
   flex: 1 1 auto;
-  margin-top: 1.5px;
   margin-left: 0;
 }
 .scrollbar {
-  margin-left: 22px;
+  margin-top: 1.6px;
+
   float: left;
   height: 300px;
   width: 65px;
   /* background: #f5f5f5; */
   overflow-x: hidden;
   overflow-y: scroll;
-  margin-bottom: 25px;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
-  background-color: #f5f5f5;
 }
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.123);
-  background-color: #f5f5f5;
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb {

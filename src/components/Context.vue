@@ -25,7 +25,6 @@
       </div>
     </div>
     <wumpus :wumpus="wumpus"></wumpus>
-    <warning :show="showWarning" :warn="warnMessage"></warning>
   </div>
 </template>
 
@@ -34,20 +33,17 @@ import api from '../core/api';
 import socket from '../core/socket';
 import GroupTitle from '../components/Context/GroupTitle';
 import MessageBox from '../components/Context/MessageBox';
-import Warning from './Warning';
 import Wumpus from './Context/Wumpus';
 
 export default {
   name: 'context',
-  components: { GroupTitle, MessageBox, Warning, Wumpus },
+  components: { GroupTitle, MessageBox, Wumpus },
   data() {
     return {
       current: this.$route.params.channel,
       msgs: {},
       newMessage: '',
       inputDisabled: false,
-      showWarning: false,
-      warnMessage: '',
       wumpus: false,
     };
   },
@@ -55,14 +51,16 @@ export default {
     group: Object,
   },
   methods: {
-    async listGroupMessages() {
+    async listGroupMessages(groupId = '') {
       // 获取群组最近消息 (默认的最多50条)
       if (this.msgs[this.current] !== undefined) {
-        console.log('msgs[current] !== undefined');
+        console.info('current msgs not empty, skip api request.');
         return;
       }
+      let rs;
       try {
-        const rs = await api.listGroupMessages(this.current);
+        if (groupId) rs = await api.listGroupMessages(this.current);
+        else rs = await api.listGroupMessages(this.current);
         this.$set(this.msgs, this.current, rs);
       } catch (err) {
         api.warn(err);
@@ -85,7 +83,7 @@ export default {
     listenMessages() {
       socket.on('new msg', (data) => {
         // socket 收到新消息 推入组件消息存储中
-        this.msgs[this.current].push(data);
+        this.msgs[data.channel].push(data);
       });
     },
   },
@@ -97,6 +95,12 @@ export default {
     }
     this.listGroupMessages();
     this.listenMessages(); // socket 监听
+  },
+  watch: {
+    async $route(to, from) {
+      this.current = to.params.channel;
+      await this.listGroupMessages(to.params.channel);
+    },
   },
 };
 </script>
