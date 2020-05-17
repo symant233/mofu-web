@@ -98,6 +98,8 @@ export default {
   },
   watch: {
     async $route(to, from) {
+      if (to.params.channel === '@me') this.wumpus = true;
+      else this.wumpus = false;
       this.current = to.params.channel;
       await this.listGroupMessages(to.params.channel);
     },

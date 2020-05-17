@@ -23,8 +23,6 @@
 </template>
 
 <script>
-import api from '../../core/api';
-
 export default {
   name: 'message-box',
   props: {
@@ -66,9 +64,6 @@ export default {
 #messages {
   width: 100%;
   height: calc(100% - 103px);
-  min-height: 0;
-  flex: 1 1 auto;
-  margin-left: 0;
 }
 .scrollbar {
   margin-top: 1.6px;

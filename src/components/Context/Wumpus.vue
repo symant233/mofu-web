@@ -1,6 +1,6 @@
 <template>
   <div id="wumpus" v-if="wumpus">
-    <div class="wumpus-image" style=""></div>
+    <div class="wumpus-image"></div>
   </div>
 </template>
 

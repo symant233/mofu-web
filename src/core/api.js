@@ -24,6 +24,15 @@ class Api {
     return rs.data;
   };
 
+  register = async (nick, email, passwd) => {
+    const rs = await this.api.post('/auth/register', {
+      nick,
+      email,
+      passwd,
+    });
+    return rs;
+  };
+
   myDetail = async () => {
     const rs = await this.api.get('/user/@me/detail');
     return rs.data;

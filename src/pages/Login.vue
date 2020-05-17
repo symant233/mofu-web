@@ -15,7 +15,7 @@
           v-model="email"
         />
         <span class="icon is-small is-left">
-          <i class="fas fa-user"></i>
+          <i class="fas fa-envelope"></i>
         </span>
       </div>
     </div>
@@ -30,9 +30,10 @@
           placeholder="Password"
           required
           v-model="passwd"
+          @keyup.enter="login"
         />
         <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
+          <i class="fas fa-key"></i>
         </span>
       </div>
     </div>
@@ -86,6 +87,7 @@ export default {
   },
   methods: {
     async login() {
+      if (!this.email || !this.passwd) return;
       try {
         const rs = await api.login(this.email, this.passwd);
         // document.cookie = `token=${rs.token}`;
@@ -98,6 +100,14 @@ export default {
         api.warn(err);
       }
     },
+  },
+  mounted() {
+    const fontAwesome = document.createElement('script');
+    fontAwesome.setAttribute(
+      'src',
+      'https://use.fontawesome.com/releases/v5.3.1/js/all.js',
+    );
+    document.head.appendChild(fontAwesome);
   },
 };
 </script>

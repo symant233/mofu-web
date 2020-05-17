@@ -1,6 +1,8 @@
 <template>
   <div id="side-search">
-    <span>{{ user.nick }}</span>
+    <router-link :to="{name: 'mofu-chat', params: {channel: '@me'}}">
+    <span>{{ user.nick || '&nbsp;' }}</span>
+    </router-link>
   </div>
 </template>
 
