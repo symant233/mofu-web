@@ -25,6 +25,11 @@
       </div>
     </div>
     <wumpus :wumpus="wumpus"></wumpus>
+    <transition name="fade">
+      <span class="tag is-warning is-light" id="typing" v-if="typing"
+        >typing: {{ typing }}</span
+      >
+    </transition>
   </div>
 </template>
 
@@ -45,7 +50,25 @@ export default {
       newMessage: '',
       inputDisabled: false,
       wumpus: false,
+      typingList: [],
+      timeout: 0,
+      stopTyping: true,
     };
+  },
+  computed: {
+    typing() {
+      let str = '';
+      const l = this.typingList;
+      if (l.length !== 0) {
+        if (l.length === 1) {
+          str += l[0];
+        } else if (l.length >= 2) {
+          str += `${l[0]}, ${l[1]}`;
+          if (l.length !== 2) str += ' and more';
+        }
+      }
+      return str;
+    },
   },
   props: {
     group: Object,
@@ -87,15 +110,6 @@ export default {
       });
     },
   },
-  beforeMount() {
-    console.info('channel->', this.current);
-    if (this.current === '@me') {
-      this.wumpus = true;
-      return;
-    }
-    this.listGroupMessages();
-    this.listenMessages(); // socket 监听
-  },
   watch: {
     async $route(to, from) {
       if (to.params.channel === '@me') this.wumpus = true;
@@ -103,6 +117,35 @@ export default {
       this.current = to.params.channel;
       await this.listGroupMessages(to.params.channel);
     },
+    newMessage(newValue, oldValue) {
+      clearTimeout(this.timeout);
+      if (this.stopTyping) {
+        this.stopTyping = false; // start typing
+        socket.emit('typing', this.group.id);
+      }
+      this.timeout = setTimeout(() => {
+        this.stopTyping = true;
+        socket.emit('stop typing', this.group.id);
+      }, 1000);
+    },
+  },
+  mounted() {
+    console.info('channel->', this.current);
+    if (this.current === '@me') {
+      this.wumpus = true;
+      return;
+    }
+    this.listGroupMessages();
+    this.listenMessages(); // socket 监听
+    socket.on('typing', (data) => {
+      if (data.channel !== this.current) return;
+      this.typingList.push(data.nick);
+    });
+    socket.on('stop typing', (data) => {
+      if (data.channel !== this.current) return;
+      const index = this.typingList.indexOf(data.nick);
+      this.typingList.splice(index, 1);
+    });
   },
 };
 </script>
@@ -121,6 +164,7 @@ export default {
 }
 
 #input {
+  padding-bottom: 11px;
   padding: 13px;
   position: fixed;
   bottom: 0px;
@@ -128,5 +172,18 @@ export default {
 
 #input.field:not(:last-child) {
   margin-bottom: 0;
+}
+
+.input:focus {
+  background-color: #fff;
+  border-color: #dbdbdb;
+  color: #363636;
+  box-shadow: none;
+}
+#typing {
+  position: relative;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 </style>

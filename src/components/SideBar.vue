@@ -2,7 +2,7 @@
   <div id="side-bar">
     <side-search :user="user"></side-search>
     <div id="side-groups" class="scrollbar">
-      <div v-for="g in groups" :key="g.id" id="message">
+      <div v-for="g in groups" :key="g.id" class="group">
         <article class="media" @click="routing(g.id)">
           <figure class="media-left">
             <p class="image is-48x48">
@@ -62,5 +62,14 @@ export default {
   width: 100%;
   margin-left: 0;
   height: calc(100% - 55px);
+}
+.group {
+  padding-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.group:hover {
+  background-color: #d4d7dc;
 }
 </style>
