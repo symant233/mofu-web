@@ -40,6 +40,7 @@ export default {
         });
       } catch (err) {
         if (err.response.status === 401) {
+          // 身份验证失败 重定向到登陆页
           this.$router.push({ name: 'mofu-login' });
         }
         api.warn(err);
@@ -59,6 +60,9 @@ export default {
       this.showWarning = true;
     }
     socket.emit('auth', token);
+    socket.on('group join', (data) => {
+      this.groupList.push(data);
+    });
   },
   watch: {
     showWarning() {

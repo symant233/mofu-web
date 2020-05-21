@@ -30,7 +30,7 @@ class Api {
       email,
       passwd,
     });
-    return rs;
+    return rs.data;
   };
 
   myDetail = async () => {
@@ -57,6 +57,11 @@ class Api {
     const rs = await this.api.post(`/group/${groupId}/message`, {
       content,
     });
+    return rs.data;
+  };
+
+  requestGroupMember = async (groupId) => {
+    const rs = await this.api.post(`/group/${groupId}/request`, {});
     return rs.data;
   };
 }
