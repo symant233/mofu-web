@@ -1,92 +1,95 @@
 <template>
   <div class="container">
     <h2 class="title is-3 has-text-centered has-text-weight-bold">Register</h2>
-
-    <!-- nickname -->
-    <div class="field">
-      <label class="label">Nick Name</label>
-      <div class="control has-icons-left">
-        <input
-          class="input"
-          type="text"
-          placeholder="Nick"
-          v-model="nick"
-          required
-        />
-        <span class="icon is-small is-left">
-          <i class="fas fa-user"></i>
-        </span>
+    <form @submit="register" onsubmit="return false">
+      <!-- nickname -->
+      <div class="field">
+        <label class="label">Nick Name</label>
+        <div class="control has-icons-left">
+          <input
+            class="input"
+            type="text"
+            placeholder="Nick"
+            v-model="nick"
+            required
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-user"></i>
+          </span>
+        </div>
       </div>
-    </div>
 
-    <!-- Username/Email -->
-    <div class="field">
-      <label class="label">Email Address</label>
-      <div class="control has-icons-left">
-        <input
-          class="input"
-          type="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          placeholder="Email"
-          v-model="email"
-          required
-        />
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
+      <!-- Username/Email -->
+      <div class="field">
+        <label class="label">Email Address</label>
+        <div class="control has-icons-left">
+          <input
+            class="input"
+            type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            placeholder="Email"
+            v-model="email"
+            required
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </div>
       </div>
-    </div>
 
-    <!-- Password -->
-    <div class="field">
-      <label class="label">Password</label>
-      <div class="control has-icons-left">
-        <input
-          class="input"
-          type="password"
-          placeholder="Password"
-          v-model="passwd"
-          @keyup.enter="register"
-          required
-        />
-        <span class="icon is-small is-left">
-          <i class="fas fa-key"></i>
-        </span>
+      <!-- Password -->
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control has-icons-left">
+          <input
+            class="input"
+            type="password"
+            placeholder="Password"
+            v-model="passwd"
+            @keyup.enter="register"
+            required
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-key"></i>
+          </span>
+        </div>
       </div>
-    </div>
 
-    <!-- term -->
-    <div class="field">
-      <div class="control">
-        <label class="checkbox">
-          <input type="checkbox" checked />
-          I agree to the Terms and Conditions
-        </label>
+      <!-- term -->
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" checked />
+            I agree to the Terms and Conditions
+          </label>
+        </div>
       </div>
-    </div>
 
-    <!-- Register Button -->
-    <div class="field">
-      <div class="control">
-        <button class="button is-link is-fullwidth" @click="register">
-          Register
-        </button>
+      <!-- Register Button -->
+      <div class="field">
+        <div class="control">
+          <input
+            type="submit"
+            class="button is-link is-fullwidth"
+            value="Register"
+          />
+        </div>
+        <p class="help is-danger" v-if="error">
+          Failed, email may already been registered.
+        </p>
       </div>
-      <p class="help is-danger" v-if="error">
-        Failed, email may already been registered.
-      </p>
-    </div>
 
-    <div class="field">
-      <div class="control">
-        <label class="content is-small has-text-right">
-          <p>
-            <span>Already have an account? </span>
-            <router-link :to="{ name: 'mofu-login' }">login</router-link>
-          </p>
-        </label>
+      <div class="field">
+        <div class="control">
+          <label class="content is-small has-text-right">
+            <p>
+              <span>Already have an account? </span>
+              <router-link :to="{ name: 'mofu-login' }">login</router-link>
+            </p>
+          </label>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 

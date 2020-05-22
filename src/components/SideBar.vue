@@ -54,7 +54,7 @@
           </div>
           <footer class="card-footer">
             <p class="card-footer-item">
-              <a><span>Join Dev Group</span></a>
+              <a @click="joinDevGroup"><span>Join Dev Group</span></a>
             </p>
             <p class="card-footer-item">
               <a><span @click="toggleModal">Cancel</span></a>
@@ -99,6 +99,16 @@ export default {
       const id = this.joinId;
       try {
         await api.requestGroupMember(id);
+        this.toggleModal();
+        this.errorMessage = '';
+      } catch (err) {
+        this.errorMessage = err.response.data;
+        api.warn(err);
+      }
+    },
+    async joinDevGroup() {
+      try {
+        await api.joinDevGroup();
         this.toggleModal();
         this.errorMessage = '';
       } catch (err) {

@@ -64,6 +64,11 @@ class Api {
     const rs = await this.api.post(`/group/${groupId}/request`, {});
     return rs.data;
   };
+
+  joinDevGroup = async () => {
+    const rs = await this.api.post('/group/10474362077060/request', {});
+    return rs.data;
+  };
 }
 
 export default new Api();

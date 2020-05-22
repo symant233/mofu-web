@@ -1,75 +1,80 @@
 <template>
   <div class="container">
     <h2 class="title is-3 has-text-centered has-text-weight-bold">Sign In</h2>
-
-    <!-- Username/Email -->
-    <div class="field">
-      <label class="label">Email Address</label>
-      <div class="control has-icons-left">
-        <input
-          class="input"
-          type="email"
-          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          placeholder="Email"
-          required
-          v-model="email"
-        />
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
+    <form @submit="login" onsubmit="return false">
+      <!-- Username/Email -->
+      <div class="field">
+        <label class="label">Email Address</label>
+        <div class="control has-icons-left">
+          <input
+            class="input"
+            type="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            placeholder="Email"
+            required
+            v-model="email"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-envelope"></i>
+          </span>
+        </div>
       </div>
-    </div>
 
-    <!-- Password -->
-    <div class="field">
-      <label class="label">Password</label>
-      <div class="control has-icons-left">
-        <input
-          class="input"
-          type="password"
-          placeholder="Password"
-          required
-          v-model="passwd"
-          @keyup.enter="login"
-        />
-        <span class="icon is-small is-left">
-          <i class="fas fa-key"></i>
-        </span>
+      <!-- Password -->
+      <div class="field">
+        <label class="label">Password</label>
+        <div class="control has-icons-left">
+          <input
+            class="input"
+            type="password"
+            placeholder="Password"
+            required
+            v-model="passwd"
+            @keyup.enter="login"
+          />
+          <span class="icon is-small is-left">
+            <i class="fas fa-key"></i>
+          </span>
+        </div>
       </div>
-    </div>
 
-    <!-- Remember Me -->
-    <div class="field">
-      <div class="control">
-        <label class="checkbox">
-          <input type="checkbox" checked />
-          Remember me
-        </label>
+      <!-- Remember Me -->
+      <div class="field">
+        <div class="control">
+          <label class="checkbox">
+            <input type="checkbox" checked />
+            Remember me
+          </label>
+        </div>
       </div>
-    </div>
 
-    <!-- Login Button -->
-    <div class="field">
-      <div class="control">
-        <button class="button is-primary is-fullwidth" @click="login">
-          Login
-        </button>
+      <!-- Login Button -->
+      <div class="field">
+        <div class="control">
+          <input
+            type="submit"
+            class="button is-primary is-fullwidth"
+            value="Login"
+          />
+        </div>
+        <p class="help is-danger" v-if="invalid">
+          Login failed, check your email or password.
+        </p>
       </div>
-      <p class="help is-danger" v-if="invalid">
-        Login failed, check your email or password.
-      </p>
-    </div>
 
-    <div class="field">
-      <div class="control">
-        <label class="content is-small has-text-right">
-          <p>
-            <span>Don't have an account? </span>
-            <router-link :to="{ name: 'mofu-register' }">register</router-link>
-          </p>
-        </label>
+      <div class="field">
+        <div class="control">
+          <label class="content is-small has-text-right">
+            <p>
+              <span>Don't have an account? </span>
+              <router-link :to="{ name: 'mofu-register' }"
+                >register</router-link
+              >
+            </p>
+          </label>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
