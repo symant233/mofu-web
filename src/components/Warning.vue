@@ -12,10 +12,42 @@
 </template>
 
 <script>
+import store from '../store';
+
 export default {
-  props: {
-    show: Boolean,
-    warn: String,
+  store,
+  data() {
+    return {
+      show: false, // 提示框是否显示
+      timeout: 0,
+    };
+  },
+  methods: {
+    setWarn(message) {
+      store.dispatch('common/setWarn', String(message));
+    },
+  },
+  watch: {
+    warn(newValue, oldValue) {
+      if (newValue === '') {
+        // 新值为空字串, 隐藏提示框
+        this.show = false;
+      } else {
+        // 非空 显示提示框并延时关闭
+        this.show = true;
+        this.timeout = setTimeout(() => {
+          // 超时后设置 warnMessage 为空字符串
+          this.setWarn('');
+        }, 5600);
+      }
+      this.setWarn(newValue);
+    },
+  },
+  computed: {
+    warn() {
+      // return store.state.common.warnMessage;
+      return store.getters['common/getWarn'];
+    },
   },
 };
 </script>

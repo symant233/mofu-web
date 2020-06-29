@@ -4,6 +4,7 @@ import Vue from 'vue';
 import VueCookie from 'vue-cookie';
 import App from './App';
 import router from './router';
+import store from './store';
 
 Vue.config.productionTip = false;
 Vue.use(VueCookie);
@@ -12,6 +13,7 @@ Vue.use(VueCookie);
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
 });

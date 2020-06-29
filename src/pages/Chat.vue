@@ -3,7 +3,7 @@
     <side-bar :groups="groupList"></side-bar>
     <context :group="groups[current]"></context>
     <member-list></member-list>
-    <warning :show="showWarning" :warn="warnMessage"></warning>
+    <warning></warning>
   </section>
 </template>
 
@@ -22,8 +22,6 @@ export default {
     return {
       current: this.$route.params.channel,
       groups: {},
-      showWarning: false,
-      warnMessage: '',
       groupList: [],
     };
   },
@@ -46,6 +44,9 @@ export default {
         api.warn(err);
       }
     },
+    setWarn(message) {
+      this.$store.dispatch('common/setWarn', String(message));
+    },
   },
   beforeMount() {
     this.myGroups();
@@ -54,10 +55,10 @@ export default {
     // 发送 token 进行 socket 验证
     const token = this.$cookie.get('token');
     if (!token) {
-      this.warnMessage =
+      const str =
         'cookie: token empty! => avoid localhost, use 127.0.0.1 instead.';
-      console.error(this.warnMessage);
-      this.showWarning = true;
+      this.setWarn(str);
+      console.error(str);
     }
     socket.emit('auth', token);
     socket.on('group join', (data) => {
@@ -65,11 +66,6 @@ export default {
     });
   },
   watch: {
-    showWarning() {
-      setTimeout(() => {
-        this.showWarning = false;
-      }, 5600);
-    },
     $route(to, from) {
       this.current = to.params.channel;
     },
