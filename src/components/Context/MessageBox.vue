@@ -63,13 +63,12 @@ export default {
 <style>
 #messages {
   width: 100%;
-  height: calc(100% - 103px);
+  flex: auto;
 }
 .scrollbar {
   margin-top: 1.6px;
 
   float: left;
-  height: 300px;
   width: 65px;
   /* background: #f5f5f5; */
   overflow-x: hidden;
@@ -106,6 +105,6 @@ export default {
   word-break: break-all;
 }
 #message .message-content {
-  padding-right: 20px;
+  padding-right: 39px;
 }
 </style>

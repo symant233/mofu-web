@@ -125,15 +125,15 @@ export default {
 
 <style>
 #side-bar {
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  float: left;
   background-color: #f2f3f5;
-  width: 25%;
 }
 #side-groups {
+  flex: auto;
   width: 100%;
   margin-left: 0;
-  height: calc(100% - 55px);
 }
 .group {
   padding-top: 0.5rem;

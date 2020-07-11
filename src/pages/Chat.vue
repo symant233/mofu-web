@@ -75,8 +75,10 @@ export default {
 
 <style>
 #main-container {
-  margin: 0;
-  height: 100%;
+  display: grid;
+  grid-template-columns: 17rem 1fr 16rem;
+  height: 100vh;
+  grid-template-areas: 'side-bar context member-list';
 }
 
 .light-color {

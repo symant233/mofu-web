@@ -1,9 +1,11 @@
 <template>
   <div id="context" class="fullheight">
     <group-title :group="group"></group-title>
+    <wumpus :wumpus="wumpus"></wumpus>
+
     <message-box :msgs="msgs[current]"></message-box>
 
-    <div id="input" class="field has-addons">
+    <div id="input" class="field has-addons" v-if="showInput">
       <div class="control is-expanded">
         <input
           class="input"
@@ -24,7 +26,7 @@
         </a>
       </div>
     </div>
-    <wumpus :wumpus="wumpus"></wumpus>
+
     <transition name="fade">
       <span class="tag is-warning is-light" id="typing" v-if="typing"
         >typing: {{ typing }}</span
@@ -45,6 +47,7 @@ export default {
   components: { GroupTitle, MessageBox, Wumpus },
   data() {
     return {
+      showInput: true,
       current: this.$route.params.channel,
       msgs: {},
       newMessage: '',
@@ -57,6 +60,7 @@ export default {
   },
   computed: {
     typing() {
+      // 多人同时输入显示的提示框内容
       let str = '';
       const l = this.typingList;
       if (l.length !== 0) {
@@ -79,7 +83,7 @@ export default {
       if (this.msgs[this.current] !== undefined) {
         console.info('current msgs not empty, skip api request.');
         return;
-      }
+      } else if (this.current === '@me') return;
       let rs;
       try {
         if (groupId) rs = await api.listGroupMessages(this.current);
@@ -112,8 +116,13 @@ export default {
   },
   watch: {
     async $route(to, from) {
-      if (to.params.channel === '@me') this.wumpus = true;
-      else this.wumpus = false;
+      if (to.params.channel === '@me') {
+        this.showInput = false;
+        this.wumpus = true;
+      } else {
+        this.showInput = true;
+        this.wumpus = false;
+      }
       this.current = to.params.channel;
       await this.listGroupMessages(to.params.channel);
     },
@@ -132,6 +141,7 @@ export default {
   mounted() {
     console.info('channel->', this.current);
     if (this.current === '@me') {
+      this.showInput = false;
       this.wumpus = true;
       return;
     }
@@ -153,21 +163,16 @@ export default {
 <style>
 #context {
   /* min-width: 600px; */
-  width: 55%;
+  display: flex;
+  flex-direction: column;
   height: 100%;
-  float: left;
-}
-
-#context #input {
-  /* min-width: 600px; */
-  width: 55%;
 }
 
 #input {
+  padding-top: 0px;
   padding-bottom: 11px;
-  padding: 13px;
-  position: fixed;
-  bottom: 0px;
+  padding-left: 13px;
+  padding-right: 13px;
 }
 
 #input.field:not(:last-child) {

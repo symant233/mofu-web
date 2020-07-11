@@ -8,10 +8,17 @@ const getters = {
   },
 };
 
-const actions = {};
+const actions = {
+  setGroups({ commit }, data) {
+    commit('SET_GROUPS', data);
+  },
+};
 
-const mutations = {};
-
+const mutations = {
+  SET_GROUPS(state, payload) {
+    state.groups = payload;
+  },
+};
 export default {
   namespaced: true,
   state,

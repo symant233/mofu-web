@@ -12,10 +12,7 @@
 </template>
 
 <script>
-import store from '../store';
-
 export default {
-  store,
   data() {
     return {
       show: false, // 提示框是否显示
@@ -24,7 +21,7 @@ export default {
   },
   methods: {
     setWarn(message) {
-      store.dispatch('common/setWarn', String(message));
+      this.$store.dispatch('common/setWarn', String(message));
     },
   },
   watch: {
@@ -45,8 +42,8 @@ export default {
   },
   computed: {
     warn() {
-      // return store.state.common.warnMessage;
-      return store.getters['common/getWarn'];
+      // return this.$store.state.common.warnMessage;
+      return this.$store.getters['common/getWarn'];
     },
   },
 };

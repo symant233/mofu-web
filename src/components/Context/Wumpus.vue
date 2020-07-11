@@ -14,12 +14,12 @@ export default {
 
 <style>
 #wumpus {
+  display: flex;
   background-color: white;
   position: relative;
   margin-top: 2px;
   width: 100%;
-  height: calc(100% - 60px);
-  padding-top: 30%;
+  height: 100%;
 }
 
 .wumpus-image {
