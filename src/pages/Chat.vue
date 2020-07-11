@@ -76,7 +76,7 @@ export default {
 <style>
 #main-container {
   display: grid;
-  grid-template-columns: 17rem 1fr 16rem;
+  grid-template-columns: 16rem 1fr 15rem;
   height: 100vh;
   grid-template-areas: 'side-bar context member-list';
 }

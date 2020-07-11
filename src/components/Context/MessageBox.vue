@@ -105,6 +105,6 @@ export default {
   word-break: break-all;
 }
 #message .message-content {
-  padding-right: 39px;
+  padding-right: 33px;
 }
 </style>

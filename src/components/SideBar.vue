@@ -21,65 +21,21 @@
       </div>
     </div>
     <!-- join group modal -->
-    <div class="modal is-active" v-if="showModal">
-      <div class="modal-background" @click="toggleModal"></div>
-      <div class="modal-content" style="max-width: 430px;">
-        <div class="card">
-          <header class="card-header">
-            <p class="card-header-title">
-              Join a group!
-            </p>
-          </header>
-          <div class="card-content">
-            <form @submit="join" onsubmit="return false">
-              <div class="field has-addons">
-                <div class="control" style="width: 100%;">
-                  <input
-                    class="input"
-                    type="text"
-                    pattern="[0-9]+"
-                    placeholder="Group ID"
-                    title="Only number accepted."
-                    v-model="joinId"
-                  />
-                </div>
-                <div class="control">
-                  <input type="submit" class="button is-info" value="Join" />
-                </div>
-              </div>
-              <p class="help is-danger" v-if="errorMessage">
-                {{ errorMessage }}
-              </p>
-            </form>
-          </div>
-          <footer class="card-footer">
-            <p class="card-footer-item">
-              <a @click="joinDevGroup"><span>Join Dev Group</span></a>
-            </p>
-            <p class="card-footer-item">
-              <a><span @click="toggleModal">Cancel</span></a>
-            </p>
-          </footer>
-        </div>
-      </div>
-    </div>
-    <button class="button" id="join" @click="toggleModal">+</button>
+    <join-group></join-group>
   </div>
 </template>
 
 <script>
 import SideSearch from './SideBar/SideSearch';
+import JoinGroup from './SideBar/JoinGroup';
 import api from '../core/api';
 
 export default {
   name: 'side-bar',
-  components: { SideSearch },
+  components: { SideSearch, JoinGroup },
   data() {
     return {
       user: {},
-      showModal: false,
-      joinId: null,
-      errorMessage: '',
     };
   },
   props: {
@@ -91,30 +47,6 @@ export default {
     },
     routing(groupId) {
       this.$router.push({ name: 'mofu-chat', params: { channel: groupId } });
-    },
-    toggleModal() {
-      this.showModal = !this.showModal;
-    },
-    async join() {
-      const id = this.joinId;
-      try {
-        await api.requestGroupMember(id);
-        this.toggleModal();
-        this.errorMessage = '';
-      } catch (err) {
-        this.errorMessage = err.response.data;
-        api.warn(err);
-      }
-    },
-    async joinDevGroup() {
-      try {
-        await api.joinDevGroup();
-        this.toggleModal();
-        this.errorMessage = '';
-      } catch (err) {
-        this.errorMessage = err.response.data;
-        api.warn(err);
-      }
     },
   },
   mounted() {
@@ -143,10 +75,5 @@ export default {
 }
 .group:hover {
   background-color: #d4d7dc;
-}
-#join {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
 }
 </style>

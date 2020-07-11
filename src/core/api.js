@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { API_BASE } from './constants';
 
 class Api {
   constructor() {
-    this.BASE = 'http://localhost:3000/api/v1';
+    this.BASE = API_BASE;
     this.api = axios.create({
       baseURL: this.BASE,
       timeout: 5000,
