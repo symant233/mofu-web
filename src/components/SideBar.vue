@@ -74,6 +74,6 @@ export default {
   padding-bottom: 0.5rem;
 }
 .group:hover {
-  background-color: #d4d7dc;
+  background-color: #e8eaed;
 }
 </style>

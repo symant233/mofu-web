@@ -168,6 +168,10 @@ export default {
   height: 100%;
 }
 
+article img {
+  -webkit-user-drag: none;
+}
+
 #input {
   padding-top: 0px;
   padding-bottom: 11px;
@@ -175,9 +179,9 @@ export default {
   padding-right: 13px;
 }
 
-#input.field:not(:last-child) {
+/* #input.field:not(:last-child) {
   margin-bottom: 0;
-}
+} */
 
 .input:focus {
   background-color: #fff;

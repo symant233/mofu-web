@@ -1,5 +1,6 @@
 <template>
   <section class="light-color" id="main-container">
+    <nav-bar></nav-bar>
     <side-bar :groups="groupList"></side-bar>
     <context :group="groups[current]"></context>
     <member-list></member-list>
@@ -14,10 +15,11 @@ import SideBar from '../components/SideBar';
 import MemberList from '../components/MemberList';
 import socket from '../core/socket';
 import Warning from '../components/Warning';
+import NavBar from '../components/NavBar';
 
 export default {
   name: 'mofu-chat',
-  components: { Context, SideBar, MemberList, Warning },
+  components: { Context, SideBar, MemberList, Warning, NavBar },
   data() {
     return {
       current: this.$route.params.channel,
@@ -76,9 +78,9 @@ export default {
 <style>
 #main-container {
   display: grid;
-  grid-template-columns: 16rem 1fr 15rem;
+  grid-template-columns: 3.6rem 16rem 1fr 15rem;
   height: 100vh;
-  grid-template-areas: 'side-bar context member-list';
+  grid-template-areas: 'nav-bar side-bar context member-list';
 }
 
 .light-color {

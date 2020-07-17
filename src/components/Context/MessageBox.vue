@@ -1,6 +1,6 @@
 <template>
-  <div id="messages" class="scrollbar" :key="current">
-    <div v-for="msg in msgs" :key="msg.id" id="message">
+  <div class="scrollbar m-messages" :key="current">
+    <div v-for="msg in msgs" :key="msg.id" class="m-message">
       <article class="media">
         <figure class="media-left">
           <p class="image is-48x48">
@@ -8,7 +8,7 @@
           </p>
         </figure>
         <div class="media-content">
-          <div class="content message-content">
+          <div class="content m-message-content">
             <p>
               <strong>{{ msg.author.nick }}</strong>
               <small style="font-size: 0.775em;">{{ msg.timestamp }}</small>
@@ -61,50 +61,40 @@ export default {
 </script>
 
 <style>
-#messages {
-  width: 100%;
-  flex: auto;
-}
 .scrollbar {
   margin-top: 1.6px;
-
   float: left;
   width: 65px;
-  /* background: #f5f5f5; */
   overflow-x: hidden;
   overflow-y: scroll;
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb {
-  border-radius: 10px;
-  background-color: #c1c1c1;
-  border-color: transparent;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #777;
+.m-messages {
+  width: 100%;
+  flex: auto;
 }
 
-#message {
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+.m-message {
+  padding: 0.5rem 1rem;
 }
 
-#message:last-child {
+.m-message:hover {
+  background-color: #fffeee;
+}
+
+.m-message:last-child {
   margin-bottom: 1rem;
 }
 
-.message-content {
+.m-message-content {
   word-wrap: break-word;
   word-break: break-all;
 }
-#message .message-content {
+.m-message .m-message-content {
   padding-right: 33px;
+}
+
+figure > p > img {
+  border-radius: 50%;
 }
 </style>
