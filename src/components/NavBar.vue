@@ -8,7 +8,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #navbar {
   background-color: #e3e5e8;
 }

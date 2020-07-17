@@ -55,7 +55,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #side-bar {
   display: flex;
   flex-direction: column;
@@ -72,8 +72,8 @@ export default {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   padding-bottom: 0.5rem;
-}
-.group:hover {
-  background-color: #e8eaed;
+  &:hover {
+    background-color: #e8eaed;
+  }
 }
 </style>

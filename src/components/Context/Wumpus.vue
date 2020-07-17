@@ -1,6 +1,6 @@
 <template>
   <div id="wumpus" v-if="wumpus">
-    <div class="wumpus-image"></div>
+    <div id="wumpus-image"></div>
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #wumpus {
   display: flex;
   background-color: white;
@@ -20,13 +20,12 @@ export default {
   margin-top: 2px;
   width: 100%;
   height: 100%;
-}
-
-.wumpus-image {
-  flex: 0 1 auto;
-  width: 421px;
-  height: 218px;
-  margin: auto;
-  background-image: url('/static/images/wumpus.svg');
+  #wumpus-image {
+    flex: 0 1 auto;
+    width: 421px;
+    height: 218px;
+    margin: auto;
+    background-image: url('/static/images/wumpus.svg');
+  }
 }
 </style>

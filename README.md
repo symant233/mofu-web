@@ -2,6 +2,10 @@
 
 > A mofumofu server for online chat! 🦊 (web part)
 
+## Current progresses
+
+![Snipaste_2020-07-17_17-34-42.png](intro/Snipaste_2020-07-17_17-34-42.png)
+
 ## Build Setup
 
 ``` bash

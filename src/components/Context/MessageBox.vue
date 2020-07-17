@@ -60,7 +60,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .scrollbar {
   margin-top: 1.6px;
   float: left;
@@ -72,26 +72,20 @@ export default {
 .m-messages {
   width: 100%;
   flex: auto;
-}
-
-.m-message {
-  padding: 0.5rem 1rem;
-}
-
-.m-message:hover {
-  background-color: #fffeee;
-}
-
-.m-message:last-child {
-  margin-bottom: 1rem;
-}
-
-.m-message-content {
-  word-wrap: break-word;
-  word-break: break-all;
-}
-.m-message .m-message-content {
-  padding-right: 33px;
+  .m-message {
+    padding: 0.5rem 1rem;
+    .m-message-content {
+      word-wrap: break-word;
+      word-break: break-all;
+      padding-right: 33px;
+    }
+  }
+  .m-message:hover {
+    background-color: #fffeee;
+  }
+  .m-message:last-child {
+    margin-bottom: 1rem;
+  }
 }
 
 figure > p > img {

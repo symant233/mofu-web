@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #main-container {
   display: grid;
   grid-template-columns: 3.6rem 16rem 1fr 15rem;

@@ -160,9 +160,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #context {
-  /* min-width: 600px; */
+  // min-width: 600px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -177,18 +177,19 @@ article img {
   padding-bottom: 11px;
   padding-left: 13px;
   padding-right: 13px;
+  input {
+    &:focus {
+      background-color: #fff;
+      border-color: #dbdbdb;
+      color: #363636;
+      box-shadow: none;
+    }
+  }
+  // &.field:last-child {
+  //   margin-bottom: 0;
+  // }
 }
 
-/* #input.field:not(:last-child) {
-  margin-bottom: 0;
-} */
-
-.input:focus {
-  background-color: #fff;
-  border-color: #dbdbdb;
-  color: #363636;
-  box-shadow: none;
-}
 #typing {
   position: relative;
   bottom: 30px;

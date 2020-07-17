@@ -8,7 +8,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #member-list {
   height: 100%;
   background-color: #f2f3f5;

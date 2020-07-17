@@ -13,7 +13,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #group {
   padding: 13px;
   font-weight: bold;
