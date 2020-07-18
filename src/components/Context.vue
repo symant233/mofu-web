@@ -81,6 +81,9 @@ export default {
   },
 
   methods: {
+    routerToMe() {
+      this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
+    },
     async listGroupMessages(groupId = '') {
       // 获取群组最近消息 (默认的最多50条)
       if (this.msgs[this.channel] !== undefined) {
@@ -93,6 +96,7 @@ export default {
         else rs = await api.listGroupMessages(this.channel);
         this.$set(this.msgs, this.channel, rs);
       } catch (err) {
+        if (err.response.status === 404) this.routerToMe();
         api.warn(err);
       }
     },
@@ -141,7 +145,6 @@ export default {
     },
   },
   mounted() {
-    console.info('channel->', this.channel);
     if (this.channel === '@me') {
       this.showInput = false;
       this.wumpus = true;
@@ -164,7 +167,6 @@ export default {
 
 <style lang="scss">
 #context {
-  // min-width: 600px;
   position: relative;
   display: flex;
   flex-direction: column;

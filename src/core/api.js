@@ -14,7 +14,12 @@ class Api {
 
   warn = (err) => {
     if (!err.response) console.warn(err);
-    else console.warn(err.response.status, err.response.data);
+    else {
+      console.warn(
+        `${err.response.status} ${err.response.data.message}`,
+        err.response.data,
+      );
+    }
   };
 
   login = async (email, passwd) => {

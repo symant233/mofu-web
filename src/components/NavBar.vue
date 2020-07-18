@@ -1,10 +1,16 @@
 <template>
-  <div id="navbar"></div>
+  <div id="navbar">
+    <!-- join group modal -->
+    <join-group></join-group>
+  </div>
 </template>
 
 <script>
+import JoinGroup from './Navbar/JoinGroup';
+
 export default {
   name: 'navbar',
+  components: { JoinGroup },
   computed: {
     user() {
       return this.$store.state.user.user;

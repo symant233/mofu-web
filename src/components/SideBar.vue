@@ -20,19 +20,16 @@
         </article>
       </div>
     </div>
-    <!-- join group modal -->
-    <join-group></join-group>
   </div>
 </template>
 
 <script>
 import SideSearch from './SideBar/SideSearch';
-import JoinGroup from './SideBar/JoinGroup';
 import api from '../core/api';
 
 export default {
   name: 'side-bar',
-  components: { SideSearch, JoinGroup },
+  components: { SideSearch },
   data() {
     return {};
   },
