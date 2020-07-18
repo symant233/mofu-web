@@ -1,6 +1,6 @@
 <template>
-  <section class="light-color" id="main-container">
-    <nav-bar></nav-bar>
+  <section class="g-main">
+    <navbar></navbar>
     <side-bar :groups="groupList"></side-bar>
     <context :group="groups[current]"></context>
     <member-list></member-list>
@@ -15,11 +15,11 @@ import SideBar from '../components/SideBar';
 import MemberList from '../components/MemberList';
 import socket from '../core/socket';
 import Warning from '../components/Warning';
-import NavBar from '../components/NavBar';
+import Navbar from '../components/Navbar';
 
 export default {
   name: 'mofu-chat',
-  components: { Context, SideBar, MemberList, Warning, NavBar },
+  components: { Context, SideBar, MemberList, Warning, Navbar },
   data() {
     return {
       current: this.$route.params.channel,
@@ -65,6 +65,7 @@ export default {
     socket.emit('auth', token);
     socket.on('group join', (data) => {
       this.groupList.push(data);
+      socket.emit('join a group', data.id);
     });
   },
   watch: {
@@ -76,14 +77,17 @@ export default {
 </script>
 
 <style lang="scss">
-#main-container {
+.g-main {
+  height: 100vh;
   display: grid;
   grid-template-columns: 3.6rem 16rem 1fr 15rem;
-  height: 100vh;
   grid-template-areas: 'nav-bar side-bar context member-list';
-}
-
-.light-color {
   background-color: #ffffff;
+}
+@media screen and (max-width: 925px) {
+  .g-main {
+    grid-template-columns: 3.6rem 15rem 1fr;
+    grid-template-areas: 'nav-bar side-bar context';
+  }
 }
 </style>

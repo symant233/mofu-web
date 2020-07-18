@@ -91,7 +91,7 @@ export default {
 <style>
 #join {
   position: absolute;
-  bottom: 10px;
-  right: 10px;
+  bottom: 8px;
+  left: 7px;
 }
 </style>
