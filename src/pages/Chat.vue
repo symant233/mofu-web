@@ -2,8 +2,8 @@
   <section class="g-main">
     <navbar></navbar>
     <side-bar :groups="groupList"></side-bar>
-    <context :group="groups[current]"></context>
-    <member-list></member-list>
+    <context :group="groups[channel]"></context>
+    <member-list :group="groups[channel]"></member-list>
     <warning></warning>
   </section>
 </template>
@@ -14,7 +14,7 @@ import Context from '../components/Context';
 import SideBar from '../components/SideBar';
 import MemberList from '../components/MemberList';
 import socket from '../core/socket';
-import Warning from '../components/Warning';
+import Warning from '../components/Common/Warning';
 import Navbar from '../components/Navbar';
 
 export default {
@@ -22,18 +22,16 @@ export default {
   components: { Context, SideBar, MemberList, Warning, Navbar },
   data() {
     return {
-      current: this.$route.params.channel,
       groups: {},
-      groupList: [],
     };
   },
   methods: {
     async myGroups() {
       // 获取所有群组
-      if (this.groups[this.current]) return;
+      if (this.groups[this.channel]) return;
       try {
         const rs = await api.myGroups();
-        this.groupList = rs;
+        this.$store.dispatch('group/setGroupList', rs);
         rs.forEach((group) => {
           // 设置 groups 的键值对 方便直接用 id 查找
           this.$set(this.groups, group.id, group);
@@ -46,21 +44,25 @@ export default {
         api.warn(err);
       }
     },
+    async myDetail() {
+      const data = await api.myDetail();
+      this.$store.dispatch('user/setUser', data);
+    },
     setWarn(message) {
       this.$store.dispatch('common/setWarn', String(message));
     },
   },
   beforeMount() {
-    this.myGroups();
+    if (this.groupList.length === 0) this.myGroups();
+    if (!this.user.id) this.myDetail();
   },
   mounted() {
     // 发送 token 进行 socket 验证
-    const token = this.$cookie.get('token');
+    const token = localStorage.getItem('token');
     if (!token) {
-      const str =
-        'cookie: token empty! => avoid localhost, use 127.0.0.1 instead.';
+      const str = 'localStorage token not found!';
       this.setWarn(str);
-      console.error(str);
+      this.$router.push({ name: 'mofu-login' });
     }
     socket.emit('auth', token);
     socket.on('group join', (data) => {
@@ -68,9 +70,18 @@ export default {
       socket.emit('join a group', data.id);
     });
   },
-  watch: {
-    $route(to, from) {
-      this.current = to.params.channel;
+  computed: {
+    // groups() {
+    //   return this.$store.group.groups;
+    // },
+    groupList() {
+      return this.$store.state.group.groupList;
+    },
+    channel() {
+      return this.$route.params.channel;
+    },
+    user() {
+      return this.$store.state.user.user;
     },
   },
 };

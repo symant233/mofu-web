@@ -111,7 +111,7 @@ export default {
       if (!this.nick || !this.email || !this.passwd) return;
       try {
         const rs = await api.register(this.nick, this.email, this.passwd);
-        this.$cookie.set('token', rs.token);
+        localStorage.setItem('token', rs.token);
         console.info('-> register succeed, cookie set.');
         this.error = false;
         this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });

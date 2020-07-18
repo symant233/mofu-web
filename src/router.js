@@ -9,8 +9,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'try-auth',
-      component: require('@/components/TryAuth').default,
+      name: 'mofu-auth',
+      component: require('@/pages/TryAuth').default,
     },
     {
       path: '/login',
@@ -26,6 +26,11 @@ export default new Router({
       path: '/chats/:channel',
       name: 'mofu-chat',
       component: require('@/pages/Chat').default,
+    },
+    {
+      path: '*',
+      name: 'mofu-not-found',
+      component: require('@/pages/NotFound').default,
     },
   ],
 });

@@ -1,9 +1,9 @@
 <template>
-  <div id="context" class="fullheight">
+  <div id="context">
     <group-title :group="group"></group-title>
     <wumpus :wumpus="wumpus"></wumpus>
 
-    <message-box :msgs="msgs[current]"></message-box>
+    <message-box :msgs="msgs[channel]"></message-box>
 
     <div id="input" class="field has-addons" v-if="showInput">
       <div class="control is-expanded">
@@ -45,10 +45,12 @@ import Wumpus from './Context/Wumpus';
 export default {
   name: 'context',
   components: { GroupTitle, MessageBox, Wumpus },
+  props: {
+    group: Object,
+  },
   data() {
     return {
       showInput: true,
-      current: this.$route.params.channel,
       msgs: {},
       newMessage: '',
       inputDisabled: false,
@@ -73,22 +75,23 @@ export default {
       }
       return str;
     },
+    channel() {
+      return this.$route.params.channel;
+    },
   },
-  props: {
-    group: Object,
-  },
+
   methods: {
     async listGroupMessages(groupId = '') {
       // 获取群组最近消息 (默认的最多50条)
-      if (this.msgs[this.current] !== undefined) {
-        console.info('current msgs not empty, skip api request.');
+      if (this.msgs[this.channel] !== undefined) {
+        console.info('channel msgs not empty, skip api request.');
         return;
-      } else if (this.current === '@me') return;
+      } else if (this.channel === '@me') return;
       let rs;
       try {
-        if (groupId) rs = await api.listGroupMessages(this.current);
-        else rs = await api.listGroupMessages(this.current);
-        this.$set(this.msgs, this.current, rs);
+        if (groupId) rs = await api.listGroupMessages(this.channel);
+        else rs = await api.listGroupMessages(this.channel);
+        this.$set(this.msgs, this.channel, rs);
       } catch (err) {
         api.warn(err);
       }
@@ -98,7 +101,7 @@ export default {
       if (!this.newMessage) return; // 禁止发送空内容
       this.inputDisabled = true;
       try {
-        const rs = await api.createGroupMessage(this.current, this.newMessage);
+        const rs = await api.createGroupMessage(this.channel, this.newMessage);
         // rs returns message object
         this.newMessage = ''; // 成功后清空输入框
         this.inputDisabled = false;
@@ -123,7 +126,6 @@ export default {
         this.showInput = true;
         this.wumpus = false;
       }
-      this.current = to.params.channel;
       await this.listGroupMessages(to.params.channel);
     },
     newMessage(newValue, oldValue) {
@@ -139,8 +141,8 @@ export default {
     },
   },
   mounted() {
-    console.info('channel->', this.current);
-    if (this.current === '@me') {
+    console.info('channel->', this.channel);
+    if (this.channel === '@me') {
       this.showInput = false;
       this.wumpus = true;
       return;
@@ -148,11 +150,11 @@ export default {
     this.listGroupMessages();
     this.listenMessages(); // socket 监听
     socket.on('typing', (data) => {
-      if (data.channel !== this.current) return;
+      if (data.channel !== this.channel) return;
       this.typingList.push(data.nick);
     });
     socket.on('stop typing', (data) => {
-      if (data.channel !== this.current) return;
+      if (data.channel !== this.channel) return;
       const index = this.typingList.indexOf(data.nick);
       this.typingList.splice(index, 1);
     });
@@ -166,7 +168,7 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 100vh;
 }
 
 article img {

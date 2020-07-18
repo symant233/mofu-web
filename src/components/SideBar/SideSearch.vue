@@ -1,7 +1,7 @@
 <template>
   <div id="side-search">
-    <router-link :to="{name: 'mofu-chat', params: {channel: '@me'}}">
-    <span>{{ user.nick || '&nbsp;' }}</span>
+    <router-link :to="{ name: 'mofu-chat', params: { channel: '@me' } }">
+      <span>{{ user.nick || '&nbsp;' }}</span>
     </router-link>
   </div>
 </template>
@@ -9,8 +9,10 @@
 <script>
 export default {
   name: 'side-search',
-  props: {
-    user: Object,
+  computed: {
+    user() {
+      return this.$store.state.user.user;
+    },
   },
 };
 </script>

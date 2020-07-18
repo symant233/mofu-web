@@ -54,7 +54,7 @@ export default {
   position: absolute;
   right: 0px;
   top: 60px;
-  max-width: 19%;
+  width: 15rem;
 }
 .fade-enter-active,
 .fade-leave-active {

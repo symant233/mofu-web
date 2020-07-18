@@ -16,7 +16,7 @@
 import api from '../core/api';
 
 export default {
-  name: 'mofu-chat',
+  name: 'mofu-auth',
   components: {},
   data() {
     return {};
@@ -24,7 +24,7 @@ export default {
   methods: {
     async tryAuth() {
       try {
-        await api.myDetail();
+        const data = await api.myDetail();
         this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
       } catch (err) {
         api.warn(err);

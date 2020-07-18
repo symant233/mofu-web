@@ -5,6 +5,11 @@
 <script>
 export default {
   name: 'navbar',
+  computed: {
+    user() {
+      return this.$store.state.user.user;
+    },
+  },
 };
 </script>
 

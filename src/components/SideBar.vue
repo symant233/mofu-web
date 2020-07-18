@@ -1,6 +1,6 @@
 <template>
   <div id="side-bar">
-    <side-search :user="user"></side-search>
+    <side-search></side-search>
     <!-- side groups list -->
     <div id="side-groups" class="scrollbar">
       <div v-for="g in groups" :key="g.id" class="group">
@@ -34,23 +34,15 @@ export default {
   name: 'side-bar',
   components: { SideSearch, JoinGroup },
   data() {
-    return {
-      user: {},
-    };
+    return {};
   },
   props: {
     groups: Array,
   },
   methods: {
-    async myDetail() {
-      this.user = await api.myDetail();
-    },
     routing(groupId) {
       this.$router.push({ name: 'mofu-chat', params: { channel: groupId } });
     },
-  },
-  mounted() {
-    if (!this.user.id) this.myDetail();
   },
 };
 </script>
