@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import JoinGroup from './Navbar/JoinGroup';
+import JoinGroup from './JoinGroup';
 
 export default {
   name: 'navbar',

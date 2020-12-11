@@ -15,7 +15,7 @@ import SideBar from '../components/SideBar';
 import MemberList from '../components/MemberList';
 import socket from '../core/socket';
 import Warning from '../components/Common/Warning';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/Navbar/NavBar';
 
 export default {
   name: 'mofu-chat',
