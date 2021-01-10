@@ -21,21 +21,22 @@ export default {
   name: 'mofu-chat',
   components: { Context, SideBar, MemberList, Warning, Navbar },
   data() {
-    return {
-      groups: {},
-    };
+    return {};
   },
   methods: {
     async myGroups() {
       // 获取所有群组
       if (this.groups[this.channel]) return;
       try {
+        const groups = {};
         const rs = await api.myGroups();
         this.$store.dispatch('group/setGroupList', rs);
-        rs.forEach((group) => {
+        rs.forEach((grp) => {
           // 设置 groups 的键值对 方便直接用 id 查找
-          this.$set(this.groups, group.id, group);
+          // this.$set(this.groups, grp.id, grp);
+          groups[grp.id] = grp;
         });
+        this.$store.dispatch('group/setGroups', groups);
       } catch (err) {
         if (err.response.status === 401) {
           // 身份验证失败 重定向到登陆页
@@ -71,9 +72,9 @@ export default {
     });
   },
   computed: {
-    // groups() {
-    //   return this.$store.group.groups;
-    // },
+    groups() {
+      return this.$store.state.group.groups;
+    },
     groupList() {
       return this.$store.state.group.groupList;
     },
