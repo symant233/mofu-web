@@ -54,15 +54,9 @@ class Api {
     return rs.data;
   };
 
-  listGroupMessages = async (groupId) => {
-    const rs = await this.api.get(`/group/${groupId}/messages?limit=30`);
-    return rs.data;
-  };
-
-  // 请求给定 message id 后的30条消息
-  listGroupMessagesBefore = async (groupId, msgId) => {
+  listGroupMessages = async (groupId, msgId = '') => {
     const rs = await this.api.get(
-      `/group/${groupId}/messages?limit=30&before${msgId}`,
+      `/group/${groupId}/messages?limit=30&before=${msgId}`,
     );
     return rs.data;
   };

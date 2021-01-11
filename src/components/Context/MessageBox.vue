@@ -1,7 +1,6 @@
 <template>
-  <div class="scrollbar m-messages" :key="current">
-    <!-- <scroll-loader :loader-method="loadMore"></scroll-loader> -->
-
+  <div class="scrollbar m-messages" :key="channel">
+    <slot></slot>
     <div v-for="msg in msgs" :key="msg.id" class="m-message">
       <article class="media">
         <figure class="media-left">
@@ -25,10 +24,8 @@
 </template>
 
 <script>
-import ScrollLoader from '../Common/ScrollLoader';
-
 export default {
-  components: { ScrollLoader },
+  components: {},
   name: 'message-box',
   props: {
     msgs: Array,
@@ -36,15 +33,13 @@ export default {
   data() {
     return {
       doScroll: false,
-      current: this.$route.params.channel,
     };
   },
-  methods: {
-    loadMore(entries, observer) {
-      console.log('LOAD~~~~~~~~~~~~~~~~~~~~~~~');
+  computed: {
+    channel() {
+      return this.$route.params.channel;
     },
   },
-  mounted() {},
   beforeUpdate() {
     const el = this.$el;
     const now = el.scrollTop + el.clientHeight;
@@ -61,11 +56,6 @@ export default {
         behavior: 'smooth',
       });
     }
-  },
-  watch: {
-    $route() {
-      this.current = this.$route.params.channel;
-    },
   },
 };
 </script>

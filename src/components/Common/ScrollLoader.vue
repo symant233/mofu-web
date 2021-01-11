@@ -1,13 +1,9 @@
 <template>
-  <div class="loader">
-    <svg viewBox="25 25 50 50" class="loader_svg" :style="size">
-      <circle cx="50" cy="50" r="20" class="loader_circle"></circle>
-    </svg>
-  </div>
+  <span id="loader"></span>
 </template>
 
 <script>
-// modified from: https://github.com/molvqingtai/vue-scroll-loader
+// deprecated components
 
 export default {
   name: 'scroll-loader',
@@ -16,80 +12,78 @@ export default {
       type: Function,
       required: true,
     },
-    'loader-distance': {
-      type: Number,
-      default: 0,
+    'loader-enabled': {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
     return {
+      loading: false,
       size: 70,
     };
+  },
+  methods: {
+    async load(entries, observer) {
+      if (this.loading === true) return;
+      if (entries[0].intersectionRatio <= 0) return;
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+      }, 1000);
+      await this.loaderMethod(observer);
+    },
   },
   computed: {
     options() {
       return {
         root: document.body,
-        rootMargin: `0px 0px ${this.loaderDistance}px 0px`,
-        threshold: 1.0,
+        rootMargin: '0px',
+        threshold: 0.1,
       };
     },
     observer() {
-      return new IntersectionObserver(this.loaderMethod, this.options);
+      return new IntersectionObserver(this.load, this.options);
     },
   },
-  mounted() {
-    this.observer.observe(this.$el);
-  },
-  activated() {
-    this.observer.observe(this.$el);
-  },
-  deactivated() {
-    this.observer.unobserve(this.$el);
-  },
-  beforeDestroy() {
-    this.observer.unobserve(this.$el);
+  watch: {
+    loaderEnabled(newV, oldV) {
+      if (newV === false) {
+        console.log('[-] unobserve loader...');
+        this.observer.unobserve(this.$el);
+      } else if (newV === true) {
+        console.log('[+] observing loader...');
+        this.observer.observe(this.$el);
+      }
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.loader {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &_svg {
-    transform-origin: center;
-    animation: rotate 2s linear infinite;
-  }
-  &_circle {
-    color: #cccccc;
-    fill: none;
-    stroke-width: 3;
-    stroke-dasharray: 1, 200;
-    stroke-dashoffset: 0;
-    stroke-linecap: round;
-    animation: dash 1.5s ease-in-out infinite;
-  }
-}
+<style lang="scss">
+// .loader {
+//   margin: auto;
+//   border: 5px solid #f3f3f3;
+//   border-radius: 50%;
+//   border-top: 5px solid #3498db;
+//   width: 30px;
+//   height: 30px;
+//   animation: spin 0.5s linear infinite;
+// }
 
-@keyframes rotate {
-  100% {
-    transform: rotate(360deg);
-  }
-}
+// @keyframes spin {
+//   0% {
+//     transform: rotate(0deg);
+//   }
+//   100% {
+//     transform: rotate(360deg);
+//   }
+// }
 
-@keyframes dash {
-  0% {
-    stroke-dasharray: 1, 200;
-    stroke-dashoffset: 0;
-  }
-  50% {
-    stroke-dasharray: 90, 200;
-    stroke-dashoffset: -35px;
-  }
-  100% {
-    stroke-dashoffset: -125px;
-  }
+#loader {
+  width: inherit;
+  padding: 0 30rem 30rem 30rem;
+  position: relative;
+  top: 0px;
 }
 </style>

@@ -22,6 +22,7 @@ const mutations = {
     state.groupList = payload;
   },
 };
+
 export default {
   namespaced: true,
   state,

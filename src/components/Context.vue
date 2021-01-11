@@ -3,7 +3,12 @@
     <group-title :group="group"></group-title>
     <wumpus :wumpus="wumpus"></wumpus>
 
-    <message-box :msgs="msgs[channel]"></message-box>
+    <message-box :msgs="msgs[channel]">
+      <button-loader
+        :loader-method="loadMoreMessages"
+        v-if="!noMoreMsg[channel]"
+      ></button-loader>
+    </message-box>
 
     <div id="input" class="field has-addons" v-if="showInput">
       <div class="control is-expanded">
@@ -40,11 +45,12 @@ import api from '../core/api';
 import socket from '../core/socket';
 import GroupTitle from '../components/Context/GroupTitle';
 import MessageBox from '../components/Context/MessageBox';
+import ButtonLoader from './Common/ButtonLoader';
 import Wumpus from './Context/Wumpus';
 
 export default {
   name: 'context',
-  components: { GroupTitle, MessageBox, Wumpus },
+  components: { GroupTitle, MessageBox, Wumpus, ButtonLoader },
   props: {
     group: Object,
   },
@@ -58,6 +64,7 @@ export default {
       typingList: [],
       timeout: 0,
       stopTyping: true,
+      noMoreMsg: {},
     };
   },
   computed: {
@@ -78,25 +85,35 @@ export default {
     channel() {
       return this.$route.params.channel;
     },
+    messages() {
+      return this.msgs[this.channel];
+    },
   },
 
   methods: {
+    async loadMoreMessages() {
+      console.log('loading more');
+      const before = this.messages ? this.messages[0].id : '';
+      await this.listGroupMessages(before);
+    },
     routerToMe() {
       this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
     },
-    async listGroupMessages(groupId = '') {
-      // 获取群组最近消息 (默认的最多50条)
-      if (this.msgs[this.channel] !== undefined) {
-        console.info('channel msgs not empty, skip api request.');
-        return;
-      } else if (this.channel === '@me') return;
+    async listGroupMessages(beforeMsgId = '') {
       let rs;
       try {
-        if (groupId) rs = await api.listGroupMessages(this.channel);
-        else rs = await api.listGroupMessages(this.channel);
-        this.$set(this.msgs, this.channel, rs);
+        rs = await api.listGroupMessages(this.channel, beforeMsgId);
+        if (this.messages) {
+          this.msgs[this.channel] = [...rs, ...this.messages];
+        } else {
+          this.$set(this.msgs, this.channel, rs);
+        }
       } catch (err) {
         if (err.response.status === 404) this.routerToMe();
+        // 没有更多消息, 关闭加载按钮
+        if (err.response.status === 400) {
+          this.$set(this.noMoreMsg, this.channel, true);
+        }
         api.warn(err);
       }
     },
@@ -120,6 +137,14 @@ export default {
         this.msgs[data.channel].push(data);
       });
     },
+    routerGroupChange() {
+      if (this.messages !== undefined) {
+        console.info('channel msgs not empty, skip api request.');
+        this.loader = false;
+        return;
+      } else if (this.channel === '@me') return;
+      this.listGroupMessages();
+    },
   },
   watch: {
     async $route(to, from) {
@@ -130,7 +155,7 @@ export default {
         this.showInput = true;
         this.wumpus = false;
       }
-      await this.listGroupMessages(to.params.channel);
+      await this.routerGroupChange();
     },
     newMessage(newValue, oldValue) {
       clearTimeout(this.timeout);
@@ -161,6 +186,9 @@ export default {
       const index = this.typingList.indexOf(data.nick);
       this.typingList.splice(index, 1);
     });
+  },
+  updated() {
+    this.loader = true;
   },
 };
 </script>
