@@ -3,10 +3,10 @@
     <group-title :group="group"></group-title>
     <wumpus :wumpus="wumpus"></wumpus>
 
-    <message-box :msgs="msgs[channel]">
+    <message-box :msgs="msgs[channel]" :end="end">
       <button-loader
         :loader-method="loadMoreMessages"
-        v-if="!noMoreMsg[channel]"
+        v-if="!noMoreMsg[channel] && showLoader"
       ></button-loader>
     </message-box>
 
@@ -65,6 +65,8 @@ export default {
       timeout: 0,
       stopTyping: true,
       noMoreMsg: {},
+      end: '', // 用来滚动的id
+      showLoader: false,
     };
   },
   computed: {
@@ -103,6 +105,7 @@ export default {
       let rs;
       try {
         rs = await api.listGroupMessages(this.channel, beforeMsgId);
+        this.end = rs[rs.length - 1].id;
         if (this.messages) {
           this.msgs[this.channel] = [...rs, ...this.messages];
         } else {
@@ -140,7 +143,6 @@ export default {
     routerGroupChange() {
       if (this.messages !== undefined) {
         console.info('channel msgs not empty, skip api request.');
-        this.loader = false;
         return;
       } else if (this.channel === '@me') return;
       this.listGroupMessages();
@@ -168,6 +170,13 @@ export default {
         socket.emit('stop typing', this.group.id);
       }, 1000);
     },
+    messages() {
+      if (this.messages && this.messages.length === 0) {
+        this.showLoader = false;
+      } else {
+        this.showLoader = true;
+      }
+    },
   },
   mounted() {
     if (this.channel === '@me') {
@@ -186,9 +195,6 @@ export default {
       const index = this.typingList.indexOf(data.nick);
       this.typingList.splice(index, 1);
     });
-  },
-  updated() {
-    this.loader = true;
   },
 };
 </script>

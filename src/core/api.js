@@ -10,6 +10,7 @@ class Api {
       // 请求头发送 cookies
       withCredentials: true,
     });
+    this.MSGLIMIT = 30;
   }
 
   warn = (err) => {
@@ -56,7 +57,7 @@ class Api {
 
   listGroupMessages = async (groupId, msgId = '') => {
     const rs = await this.api.get(
-      `/group/${groupId}/messages?limit=30&before=${msgId}`,
+      `/group/${groupId}/messages?limit=${this.MSGLIMIT}&before=${msgId}`,
     );
     return rs.data;
   };

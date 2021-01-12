@@ -1,7 +1,7 @@
 <template>
   <div class="scrollbar m-messages" :key="channel">
     <slot></slot>
-    <div v-for="msg in msgs" :key="msg.id" class="m-message">
+    <div v-for="msg in msgs" :key="msg.id" :id="msg.id" class="m-message">
       <article class="media">
         <figure class="media-left">
           <p class="image is-48x48">
@@ -24,38 +24,41 @@
 </template>
 
 <script>
+import api from '../../core/api';
+
 export default {
   components: {},
   name: 'message-box',
   props: {
     msgs: Array,
+    end: String,
   },
   data() {
-    return {
-      doScroll: false,
-    };
+    return {};
   },
   computed: {
     channel() {
       return this.$route.params.channel;
     },
   },
-  beforeUpdate() {
-    const el = this.$el;
-    const now = el.scrollTop + el.clientHeight;
-    if (now >= el.scrollHeight) this.doScroll = true;
-    else this.doScroll = false;
-  },
-  updated() {
-    if (this.doScroll) {
+  methods: {
+    scrollRear() {
       const el = this.$el;
-      el.scrollTo({
-        top: el.scrollHeight,
-        left: 0,
-        // 使滚动条动画形式滑动而不是瞬时
-        behavior: 'smooth',
-      });
-    }
+      el.scrollTo({ top: el.scrollHeight });
+    },
+  },
+  watch: {
+    msgs() {
+      if (this.msgs && this.msgs.length === 0) return;
+      if (this.msgs.length <= api.MSGLIMIT) {
+        console.log('[MessageBox] scrollRear...');
+        this.$nextTick(this.scrollRear);
+      } else {
+        this.$nextTick(() => {
+          document.getElementById(this.end).scrollIntoView();
+        });
+      }
+    },
   },
 };
 </script>
