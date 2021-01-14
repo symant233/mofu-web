@@ -61,28 +61,21 @@ export default {
 </script>
 
 <style lang="scss">
-// .loader {
-//   margin: auto;
-//   border: 5px solid #f3f3f3;
-//   border-radius: 50%;
-//   border-top: 5px solid #3498db;
-//   width: 30px;
-//   height: 30px;
-//   animation: spin 0.5s linear infinite;
-// }
-
-// @keyframes spin {
-//   0% {
-//     transform: rotate(0deg);
-//   }
-//   100% {
-//     transform: rotate(360deg);
-//   }
-// }
-#loader {
-  width: inherit;
-  padding: 0 30rem 30rem 30rem;
-  position: relative;
-  top: 0px;
+.loader {
+  margin: auto;
+  border: 5px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 5px solid #3498db;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.5s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>

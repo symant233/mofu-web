@@ -21,7 +21,7 @@ import api from '../core/api';
 import socket from '../core/socket';
 import GroupTitle from '../components/Context/GroupTitle';
 import MessageBox from '../components/Context/MessageBox';
-import ButtonLoader from './Common/ButtonLoader';
+import ButtonLoader from './Plugins/ButtonLoader';
 import Wumpus from './Context/Wumpus';
 import ChatInput from './Context/ChatInput';
 import Typing from './Context/Typing';
@@ -69,19 +69,22 @@ export default {
     },
     async listGroupMessages(beforeMsgId = '') {
       let rs;
+      // 防止等待返回数据时切换频道
+      const requestChannel = this.channel;
+      const msgs = this.messages;
       try {
-        rs = await api.listGroupMessages(this.channel, beforeMsgId);
+        rs = await api.listGroupMessages(requestChannel, beforeMsgId);
         this.end = rs[rs.length - 1].id;
-        if (this.messages) {
-          this.msgs[this.channel] = [...rs, ...this.messages];
+        if (msgs) {
+          this.msgs[requestChannel] = [...rs, ...msgs];
         } else {
-          this.$set(this.msgs, this.channel, rs);
+          this.$set(this.msgs, requestChannel, rs);
         }
       } catch (err) {
         if (err.response.status === 404) this.routerToMe();
         // 没有更多消息, 关闭加载按钮
         if (err.response.status === 400) {
-          this.$set(this.noMoreMsg, this.channel, true);
+          this.$set(this.noMoreMsg, requestChannel, true);
         }
         api.warn(err);
       }

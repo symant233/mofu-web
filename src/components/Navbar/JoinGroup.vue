@@ -1,7 +1,6 @@
-<!-- fixed button modal -->
 <template>
   <div>
-    <modal :showModal="showModal" :maxWidth="430">
+    <modal :showModal.sync="showModal" :maxWidth="430">
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">
@@ -40,19 +39,20 @@
         </footer>
       </div>
     </modal>
-    <button class="button" id="join" @click="toggleModal" tabindex="-1">
-      +
-    </button>
+    <div @click.prevent="toggleModal">
+      <circle-button></circle-button>
+    </div>
   </div>
 </template>
 
 <script>
 import api from '../../core/api';
 import Modal from '../Common/Modal';
+import CircleButton from '../Plugins/CircleButton';
 
 export default {
   name: 'join-group',
-  components: { Modal },
+  components: { Modal, CircleButton },
   data() {
     return {
       showModal: false,

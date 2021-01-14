@@ -1,17 +1,15 @@
 <template>
   <div id="navbar">
-    <!-- <circle-button></circle-button> -->
     <join-group></join-group>
   </div>
 </template>
 
 <script>
 import JoinGroup from './JoinGroup';
-import CircleButton from '../Plugins/CircleButton';
 
 export default {
   name: 'navbar',
-  components: { JoinGroup, CircleButton },
+  components: { JoinGroup },
   computed: {
     user() {
       return this.$store.state.user.user;

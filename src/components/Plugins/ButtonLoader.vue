@@ -28,5 +28,8 @@ export default {
   color: darkturquoise;
   padding: 0.5rem 0;
   text-align-last: center;
+  &:hover {
+    background-color: #fffeee;
+  }
 }
 </style>

@@ -4,7 +4,7 @@
 
 ## Current progresses
 
-![Snipaste_2020-07-17_17-34-42.png](intro/Snipaste_2020-07-17_17-34-42.png)
+![Snipaste_2020-07-17_17-34-42.png](docs/intro/Snipaste_2020-07-17_17-34-42.png)
 
 ## Build Setup
 

@@ -31,10 +31,7 @@ export default {
   name: 'message-box',
   props: {
     msgs: Array,
-    end: String,
-  },
-  data() {
-    return {};
+    end: String, // 加载更多后, 最底下的消息ID
   },
   computed: {
     channel() {
@@ -55,10 +52,16 @@ export default {
         this.$nextTick(this.scrollRear);
       } else {
         this.$nextTick(() => {
+          console.log('[MessageBox] scroll end...');
           document.getElementById(this.end).scrollIntoView();
         });
       }
     },
+  },
+  mounted() {
+    // 因为使用该组件时绑定了:key, 所以每次切换$router会重新进行生命周期
+    console.log('[MessageBox] scrollRear...');
+    this.$nextTick(this.scrollRear);
   },
 };
 </script>
