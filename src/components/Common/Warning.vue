@@ -60,7 +60,6 @@ export default {
 .fade-leave-active {
   transition: opacity 0.25s ease-out;
 }
-
 .fade-enter,
 .fade-leave-to {
   opacity: 0;

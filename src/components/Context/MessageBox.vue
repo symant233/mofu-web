@@ -71,7 +71,6 @@ export default {
   overflow-x: hidden;
   overflow-y: scroll;
 }
-
 .m-messages {
   width: 100%;
   flex: auto;
@@ -90,7 +89,6 @@ export default {
     margin-bottom: 1rem;
   }
 }
-
 figure > p > img {
   border-radius: 50%;
 }

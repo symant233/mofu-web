@@ -79,7 +79,6 @@ export default {
 //     transform: rotate(360deg);
 //   }
 // }
-
 #loader {
   width: inherit;
   padding: 0 30rem 30rem 30rem;

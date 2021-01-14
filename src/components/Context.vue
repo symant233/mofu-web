@@ -6,37 +6,13 @@
     <message-box :msgs="msgs[channel]" :end="end">
       <button-loader
         :loader-method="loadMoreMessages"
-        v-if="!noMoreMsg[channel] && showLoader"
+        v-if="!noMoreMsg[channel] && showLoader && showInput"
       ></button-loader>
     </message-box>
 
-    <div id="input" class="field has-addons" v-if="showInput">
-      <div class="control is-expanded">
-        <input
-          class="input"
-          type="text"
-          placeholder="Text..."
-          v-model="newMessage"
-          @keyup.enter="createMessage"
-          :disabled="inputDisabled"
-        />
-      </div>
-      <div class="control">
-        <a
-          class="button is-info"
-          @click="createMessage"
-          :disabled="inputDisabled"
-        >
-          Enter
-        </a>
-      </div>
-    </div>
+    <chat-input :showInput="showInput"></chat-input>
 
-    <transition name="fade">
-      <span class="tag is-warning is-light" id="typing" v-if="typing"
-        >typing: {{ typing }}</span
-      >
-    </transition>
+    <typing></typing>
   </div>
 </template>
 
@@ -47,43 +23,33 @@ import GroupTitle from '../components/Context/GroupTitle';
 import MessageBox from '../components/Context/MessageBox';
 import ButtonLoader from './Common/ButtonLoader';
 import Wumpus from './Context/Wumpus';
+import ChatInput from './Context/ChatInput';
+import Typing from './Context/Typing';
 
 export default {
   name: 'context',
-  components: { GroupTitle, MessageBox, Wumpus, ButtonLoader },
+  components: {
+    GroupTitle,
+    MessageBox,
+    Wumpus,
+    ButtonLoader,
+    ChatInput,
+    Typing,
+  },
   props: {
     group: Object,
   },
   data() {
     return {
-      showInput: true,
-      msgs: {},
-      newMessage: '',
-      inputDisabled: false,
+      showInput: true, // props
+      msgs: {}, // props
       wumpus: false,
-      typingList: [],
-      timeout: 0,
-      stopTyping: true,
-      noMoreMsg: {},
-      end: '', // 用来滚动的id
-      showLoader: false,
+      noMoreMsg: {}, // props
+      end: '', // props 用来滚动的id
+      showLoader: false, // props
     };
   },
   computed: {
-    typing() {
-      // 多人同时输入显示的提示框内容
-      let str = '';
-      const l = this.typingList;
-      if (l.length !== 0) {
-        if (l.length === 1) {
-          str += l[0];
-        } else if (l.length >= 2) {
-          str += `${l[0]}, ${l[1]}`;
-          if (l.length !== 2) str += ' and more';
-        }
-      }
-      return str;
-    },
     channel() {
       return this.$route.params.channel;
     },
@@ -120,20 +86,6 @@ export default {
         api.warn(err);
       }
     },
-    async createMessage() {
-      // 用户发送消息
-      if (!this.newMessage) return; // 禁止发送空内容
-      this.inputDisabled = true;
-      try {
-        const rs = await api.createGroupMessage(this.channel, this.newMessage);
-        // rs returns message object
-        this.newMessage = ''; // 成功后清空输入框
-        this.inputDisabled = false;
-      } catch (err) {
-        api.warn(err);
-        this.inputDisabled = false;
-      }
-    },
     listenMessages() {
       socket.on('new msg', (data) => {
         // socket 收到新消息 推入组件消息存储中
@@ -159,17 +111,7 @@ export default {
       }
       await this.routerGroupChange();
     },
-    newMessage(newValue, oldValue) {
-      clearTimeout(this.timeout);
-      if (this.stopTyping) {
-        this.stopTyping = false; // start typing
-        socket.emit('typing', this.group.id);
-      }
-      this.timeout = setTimeout(() => {
-        this.stopTyping = true;
-        socket.emit('stop typing', this.group.id);
-      }, 1000);
-    },
+
     messages() {
       if (this.messages && this.messages.length === 0) {
         this.showLoader = false;
@@ -186,15 +128,6 @@ export default {
     }
     this.listGroupMessages();
     this.listenMessages(); // socket 监听
-    socket.on('typing', (data) => {
-      if (data.channel !== this.channel) return;
-      this.typingList.push(data.nick);
-    });
-    socket.on('stop typing', (data) => {
-      if (data.channel !== this.channel) return;
-      const index = this.typingList.indexOf(data.nick);
-      this.typingList.splice(index, 1);
-    });
   },
 };
 </script>
@@ -206,36 +139,7 @@ export default {
   flex-direction: column;
   height: 100vh;
 }
-
 article img {
   -webkit-user-drag: none;
-}
-
-#input {
-  padding-top: 0px;
-  padding-bottom: 11px;
-  padding-left: 13px;
-  padding-right: 13px;
-  input {
-    &:focus {
-      background-color: #fff;
-      border-color: #dbdbdb;
-      color: #363636;
-      box-shadow: none;
-    }
-  }
-  &.field:last-child {
-    margin-bottom: 0;
-  }
-  &.field:not(:last-child) {
-    margin-bottom: 0;
-  }
-}
-
-#typing {
-  position: absolute;
-  bottom: 3.3rem;
-  left: 50%;
-  transform: translateX(-50%);
 }
 </style>

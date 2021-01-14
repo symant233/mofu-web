@@ -125,7 +125,6 @@ body {
   box-sizing: border-box;
   margin: 0;
 }
-
 /* Overall Form Set-Up */
 .container {
   background-color: white;
@@ -140,12 +139,10 @@ body {
   overflow-y: hidden;
   padding: 30px 50px;
 }
-
 /* Form Header */
 .title {
   margin-bottom: 1.5rem;
 }
-
 /* Password reset text */
 .control span {
   color: black;
