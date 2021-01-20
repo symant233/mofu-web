@@ -22,11 +22,10 @@ export default {
       required: true,
     },
   },
-
   methods: {
     toggleModal() {
       // 发送更新事件, 需要使用修饰符.sync
-      // :showModal.sync="" 来进行 props 双向绑定
+      // :show-modal.sync="" 来进行 props 双向绑定
       this.$emit('update:showModal', !this.showModal);
     },
   },

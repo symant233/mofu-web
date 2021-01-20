@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2 class="title is-3 has-text-centered has-text-weight-bold">Sign In</h2>
-    <form @submit="login" onsubmit="return false">
+    <form @submit.prevent="login">
       <!-- Username/Email -->
       <div class="field">
         <label class="label">Email Address</label>

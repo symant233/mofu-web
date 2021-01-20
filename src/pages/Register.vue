@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h2 class="title is-3 has-text-centered has-text-weight-bold">Register</h2>
-    <form @submit="register" onsubmit="return false">
+    <form @submit.prevent="register">
       <!-- nickname -->
       <div class="field">
         <label class="label">Nick Name</label>

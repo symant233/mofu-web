@@ -10,7 +10,7 @@
       ></button-loader>
     </message-box>
 
-    <chat-input :showInput="showInput"></chat-input>
+    <chat-input :show-input="showInput"></chat-input>
 
     <typing></typing>
   </div>

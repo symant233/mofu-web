@@ -1,6 +1,6 @@
 <template>
   <div>
-    <modal :showModal.sync="showModal" :maxWidth="430">
+    <modal :show-modal.sync="showModal" :max-width="430">
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">
@@ -48,7 +48,7 @@
 <script>
 import api from '../../core/api';
 import Modal from '../Common/Modal';
-import CircleButton from '../Plugins/CircleButton';
+import CircleButton from './CircleButton';
 
 export default {
   name: 'join-group',

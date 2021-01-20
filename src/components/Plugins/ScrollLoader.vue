@@ -3,7 +3,7 @@
 </template>
 
 <script>
-// deprecated components
+// deprecated component
 
 export default {
   name: 'scroll-loader',

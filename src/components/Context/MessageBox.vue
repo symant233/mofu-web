@@ -48,11 +48,9 @@ export default {
     msgs() {
       if (this.msgs && this.msgs.length === 0) return;
       if (this.msgs.length <= api.MSGLIMIT) {
-        console.log('[MessageBox] scrollRear...');
         this.$nextTick(this.scrollRear);
       } else {
         this.$nextTick(() => {
-          console.log('[MessageBox] scroll end...');
           document.getElementById(this.end).scrollIntoView();
         });
       }
@@ -60,7 +58,6 @@ export default {
   },
   mounted() {
     // 因为使用该组件时绑定了:key, 所以每次切换$router会重新进行生命周期
-    console.log('[MessageBox] scrollRear...');
     this.$nextTick(this.scrollRear);
   },
 };
