@@ -30,15 +30,19 @@ import api from '../core/api';
 export default {
   name: 'side-bar',
   components: { SideSearch },
-  data() {
-    return {};
+  computed: {
+    channel() {
+      return this.$route.params.channel;
+    },
   },
   props: {
     groups: Array,
   },
   methods: {
     routing(groupId) {
-      this.$router.push({ name: 'mofu-chat', params: { channel: groupId } });
+      if (groupId !== this.channel) {
+        this.$router.push({ name: 'mofu-chat', params: { channel: groupId } });
+      }
     },
   },
 };

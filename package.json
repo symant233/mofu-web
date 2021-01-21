@@ -11,6 +11,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@sentry/tracing": "^6.0.0",
+    "@sentry/vue": "^6.0.0",
     "axios": "^0.19.2",
     "js-yaml": "^3.13.1",
     "socket.io-client": "^2.3.0",

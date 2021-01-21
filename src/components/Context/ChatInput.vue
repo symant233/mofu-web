@@ -8,6 +8,7 @@
         v-model="newMessage"
         @keyup.enter="createMessage"
         :disabled="inputDisabled"
+        v-focus
       />
     </div>
     <div class="control">

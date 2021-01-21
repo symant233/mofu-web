@@ -1,10 +1,12 @@
 <template>
-  <div class="modal is-active" v-if="showModal">
-    <div class="modal-background" @click="toggleModal"></div>
-    <div class="modal-content" :style="{ maxWidth: maxWidth + 'px' }">
-      <slot></slot>
+  <transition name="fade">
+    <div class="modal is-active" v-if="showModal">
+      <div class="modal-background" @click="toggleModal"></div>
+      <div class="modal-content" :style="{ maxWidth: maxWidth + 'px' }">
+        <slot></slot>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -32,4 +34,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease-out;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

@@ -19,8 +19,8 @@
 <script>
 import api from '../core/api';
 import socket from '../core/socket';
-import GroupTitle from '../components/Context/GroupTitle';
-import MessageBox from '../components/Context/MessageBox';
+import GroupTitle from './Context/GroupTitle';
+import MessageBox from './Context/MessageBox';
 import ButtonLoader from './Plugins/ButtonLoader';
 import Wumpus from './Context/Wumpus';
 import ChatInput from './Context/ChatInput';
