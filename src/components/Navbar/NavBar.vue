@@ -1,5 +1,8 @@
 <template>
   <div id="navbar">
+    <figure id="user-avatar">
+      <img :src="user.avatar" />
+    </figure>
     <div class="navbar-item">
       <font-awesome-icon icon="comment" />
     </div>
@@ -37,5 +40,13 @@ export default {
 }
 .navbar-active {
   color: #4db6ac;
+}
+#user-avatar {
+  margin: 7px auto;
+  width: 36px;
+  height: 36px;
+  & img {
+    border-radius: 50%;
+  }
 }
 </style>

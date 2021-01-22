@@ -30,13 +30,13 @@ export default {
       try {
         const groups = {};
         const rs = await api.myGroups();
-        this.$store.dispatch('group/setGroupList', rs);
+        this.$store.commit('group/setGroupList', rs);
         rs.forEach((grp) => {
           // 设置 groups 的键值对 方便直接用 id 查找
           // this.$set(this.groups, grp.id, grp);
           groups[grp.id] = grp;
         });
-        this.$store.dispatch('group/setGroups', groups);
+        this.$store.commit('group/setGroups', groups);
       } catch (err) {
         if (err.response.status === 401) {
           // 身份验证失败 重定向到登陆页
@@ -47,7 +47,7 @@ export default {
     },
     async myDetail() {
       const data = await api.myDetail();
-      this.$store.dispatch('user/setUser', data);
+      this.$store.commit('user/setUser', data);
     },
     setWarn(message) {
       this.$store.dispatch('common/setWarn', String(message));

@@ -5,20 +5,13 @@ const state = () => ({
 
 const getters = {};
 
-const actions = {
-  setGroups({ commit }, data) {
-    commit('SET_GROUPS', data);
-  },
-  setGroupList({ commit }, data) {
-    commit('SET_GROUP_LIST', data);
-  },
-};
+const actions = {};
 
 const mutations = {
-  SET_GROUPS(state, payload) {
+  setGroups(state, payload) {
     state.groups = payload;
   },
-  SET_GROUP_LIST(state, payload) {
+  setGroupList(state, payload) {
     state.groupList = payload;
   },
 };

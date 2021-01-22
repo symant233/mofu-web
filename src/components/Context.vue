@@ -60,7 +60,6 @@ export default {
 
   methods: {
     async loadMoreMessages() {
-      console.log('loading more');
       const before = this.messages ? this.messages[0].id : '';
       await this.listGroupMessages(before);
     },

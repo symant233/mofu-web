@@ -34,7 +34,10 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.modal-content {
+  width: 100%; // 覆盖 bulma
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.2s ease-out;

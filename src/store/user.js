@@ -4,14 +4,10 @@ const state = () => ({
 
 const getters = {};
 
-const actions = {
-  setUser({ commit }, data) {
-    commit('SET_USER', data);
-  },
-};
+const actions = {};
 
 const mutations = {
-  SET_USER(state, payload) {
+  setUser(state, payload) {
     state.user = payload;
   },
 };
