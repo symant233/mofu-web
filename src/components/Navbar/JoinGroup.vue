@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="mofu-join">
     <modal :show-modal.sync="showModal" :max-width="430">
       <div class="card">
         <header class="card-header">
@@ -39,20 +39,21 @@
         </footer>
       </div>
     </modal>
-    <div @click.prevent="toggleModal">
-      <circle-button></circle-button>
-    </div>
+    <div
+      class="u-icon-add"
+      id="mofu-join-item"
+      @click.prevent="toggleModal"
+    ></div>
   </div>
 </template>
 
 <script>
 import api from '../../core/api';
 import Modal from '../Common/Modal';
-import CircleButton from './CircleButton';
 
 export default {
   name: 'join-group',
-  components: { Modal, CircleButton },
+  components: { Modal },
   data() {
     return {
       showModal: false,
@@ -89,10 +90,21 @@ export default {
 };
 </script>
 
-<style>
-#join {
-  position: absolute;
-  bottom: 8px;
-  left: 7px;
+<style lang="scss">
+#mofu-join {
+  margin-top: auto;
+}
+#mofu-join-item {
+  display: block;
+  position: relative;
+  margin: 13px auto;
+  height: 30px;
+  width: 30px;
+  &:focus {
+    outline: 0px;
+  }
+}
+.u-icon-add {
+  background-image: url('/static/images/add-icon.svg');
 }
 </style>

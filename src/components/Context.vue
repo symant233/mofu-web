@@ -1,9 +1,9 @@
 <template>
   <div id="context">
     <group-title :group="group"></group-title>
-    <wumpus :wumpus="wumpus"></wumpus>
+    <wumpus v-show="wumpus"></wumpus>
 
-    <message-box :msgs="msgs[channel]" :end="end">
+    <message-box :msgs="msgs[channel]" :end="end" :key="channel">
       <button-loader
         :loader-method="loadMoreMessages"
         v-if="!noMoreMsg[channel] && showLoader && showInput"
@@ -97,7 +97,7 @@ export default {
     },
     routerGroupChange() {
       if (this.messages !== undefined) {
-        console.info('channel msgs not empty, skip api request.');
+        // messages 非空, 跳过 api 请求
         return;
       } else if (this.channel === '@me') return;
       this.listGroupMessages();
@@ -114,9 +114,10 @@ export default {
       }
       await this.routerGroupChange();
     },
-
-    messages() {
-      if (this.messages && this.messages.length === 0) {
+    messages(newValue, oldValue) {
+      if (newValue === undefined) {
+        this.showLoader = false;
+      } else if (newValue && newValue.length === 0) {
         this.showLoader = false;
       } else {
         this.showLoader = true;

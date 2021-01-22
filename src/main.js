@@ -3,12 +3,19 @@
 import Vue from 'vue';
 import * as Sentry from '@sentry/vue';
 import { Integrations } from '@sentry/tracing';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import App from './App';
 import router from './router';
 import store from './store';
 import { SENTRY_DSN } from './core/constants';
 
+library.add(fas);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+
 Vue.config.productionTip = false;
+console.log(`Environment: ${process.env.NODE_ENV}`);
 
 Sentry.init({
   Vue,

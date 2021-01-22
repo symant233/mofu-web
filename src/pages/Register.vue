@@ -19,7 +19,7 @@
         </div>
       </div>
 
-      <!-- Username/Email -->
+      <!-- Email -->
       <div class="field">
         <label class="label">Email Address</label>
         <div class="control has-icons-left">
@@ -79,6 +79,7 @@
         </p>
       </div>
 
+      <!-- switch -->
       <div class="field">
         <div class="control">
           <label class="content is-small has-text-right">

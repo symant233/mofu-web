@@ -1,15 +1,11 @@
 <template>
-  <div id="wumpus" v-if="wumpus">
+  <div id="wumpus">
     <div id="wumpus-image"></div>
   </div>
 </template>
 
 <script>
-export default {
-  props: {
-    wumpus: Boolean,
-  },
-};
+export default {};
 </script>
 
 <style lang="scss">

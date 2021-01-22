@@ -2,7 +2,7 @@
   <section class="g-main">
     <navbar></navbar>
     <side-bar :groups="groupList"></side-bar>
-    <context :group="groups[channel]" :key="channel"></context>
+    <context :group="groups[channel]"></context>
     <member-list :group="groups[channel]"></member-list>
     <warning></warning>
   </section>

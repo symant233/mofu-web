@@ -2,7 +2,7 @@
   <div class="container">
     <h2 class="title is-3 has-text-centered has-text-weight-bold">Sign In</h2>
     <form @submit.prevent="login">
-      <!-- Username/Email -->
+      <!-- Email -->
       <div class="field">
         <label class="label">Email Address</label>
         <div class="control has-icons-left">
@@ -62,6 +62,7 @@
         </p>
       </div>
 
+      <!-- switch -->
       <div class="field">
         <div class="control">
           <label class="content is-small has-text-right">

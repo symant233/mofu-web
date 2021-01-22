@@ -1,6 +1,6 @@
 <template>
   <div id="group">
-    <span>{{ group ? group.name : '@me' }}</span>
+    <span>{{ group ? group.name : '&nbsp;' }}</span>
   </div>
 </template>
 
