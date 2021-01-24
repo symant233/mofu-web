@@ -113,6 +113,7 @@ export default {
       try {
         const rs = await api.register(this.nick, this.email, this.passwd);
         localStorage.setItem('token', rs.token);
+        api.conf.headers.Authorization = `Bearer ${rs.token}`;
         console.info('-> register succeed, cookie set.');
         this.error = false;
         this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });

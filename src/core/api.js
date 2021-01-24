@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_BASE } from './constants';
+import { API_BASE, MSG_LIMIT } from './constants';
 
 class Api {
   constructor() {
@@ -10,7 +10,10 @@ class Api {
       // 请求头发送 cookies
       withCredentials: true,
     });
-    this.MSGLIMIT = 30;
+    this.conf = {
+      // 登录注册时会更新为 Bearer ...
+      headers: { Authorization: '' },
+    };
   }
 
   warn = (err) => {
@@ -41,41 +44,48 @@ class Api {
   };
 
   myDetail = async () => {
-    const rs = await this.api.get('/user/@me/detail');
+    const rs = await this.api.get('/user/@me/detail', this.conf);
     return rs.data;
   };
 
   myGroups = async () => {
-    const rs = await this.api.get('/group/@me');
+    const rs = await this.api.get('/group/@me', this.conf);
     return rs.data;
   };
 
   groupDetail = async (groupId) => {
-    const rs = await this.api.get(`/group/${groupId}/detail`);
+    const rs = await this.api.get(`/group/${groupId}/detail`, this.conf);
     return rs.data;
   };
 
   listGroupMessages = async (groupId, msgId = '') => {
     const rs = await this.api.get(
-      `/group/${groupId}/messages?limit=${this.MSGLIMIT}&before=${msgId}`,
+      `/group/${groupId}/messages?limit=${MSG_LIMIT}&before=${msgId}`,
+      this.conf,
     );
     return rs.data;
   };
 
   createGroupMessage = async (groupId, content) => {
-    const rs = await this.api.post(`/group/${groupId}/message`, {
-      content,
-    });
+    const rs = await this.api.post(
+      `/group/${groupId}/message`,
+      { content },
+      this.conf,
+    );
     return rs.data;
   };
 
   requestGroupMember = async (groupId) => {
-    const rs = await this.api.post(`/group/${groupId}/request`, {});
+    const rs = await this.api.post(`/group/${groupId}/request`, {}, this.conf);
     return rs.data;
   };
 
   joinDevGroup = async () => {
-    const rs = await this.api.post('/group/10474362077060/request', {});
+    const rs = await this.api.post(
+      '/group/10474362077060/request',
+      {},
+      this.conf,
+    );
     return rs.data;
   };
 }
