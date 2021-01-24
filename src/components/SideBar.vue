@@ -1,50 +1,18 @@
 <template>
   <div id="side-bar">
     <side-search></side-search>
-    <!-- side groups list -->
-    <div id="side-groups" class="scrollbar">
-      <div v-for="g in groups" :key="g.id" class="group">
-        <article class="media" @click="routing(g.id)">
-          <figure class="media-left">
-            <p class="image is-48x48">
-              <img :src="g.avatar || '/static/images/akari.jpg'" />
-            </p>
-          </figure>
-          <div class="media-content">
-            <div class="content message-content">
-              <p>
-                <strong>{{ g.name }}</strong>
-              </p>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
+    <group-list></group-list>
   </div>
 </template>
 
 <script>
 import SideSearch from './SideBar/SideSearch';
+import GroupList from './SideBar/GroupList';
 import api from '../core/api';
 
 export default {
   name: 'side-bar',
-  components: { SideSearch },
-  computed: {
-    channel() {
-      return this.$route.params.channel;
-    },
-  },
-  props: {
-    groups: Array,
-  },
-  methods: {
-    routing(groupId) {
-      if (groupId !== this.channel) {
-        this.$router.push({ name: 'mofu-chat', params: { channel: groupId } });
-      }
-    },
-  },
+  components: { SideSearch, GroupList },
 };
 </script>
 
@@ -54,19 +22,5 @@ export default {
   flex-direction: column;
   height: 100%;
   background-color: #f2f3f5;
-}
-#side-groups {
-  flex: auto;
-  width: 100%;
-  margin-left: 0;
-}
-.group {
-  padding-top: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-  padding-bottom: 0.5rem;
-  &:hover {
-    background-color: #e8eaed;
-  }
 }
 </style>

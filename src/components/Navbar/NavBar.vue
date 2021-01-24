@@ -42,7 +42,7 @@ export default {
   color: #4db6ac;
 }
 #user-avatar {
-  margin: 7px auto;
+  margin: 9px auto;
   width: 36px;
   height: 36px;
   & img {

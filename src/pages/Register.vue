@@ -14,7 +14,7 @@
             required
           />
           <span class="icon is-small is-left">
-            <i class="fas fa-user"></i>
+            <font-awesome-icon icon="user" />
           </span>
         </div>
       </div>
@@ -32,7 +32,7 @@
             required
           />
           <span class="icon is-small is-left">
-            <i class="fas fa-envelope"></i>
+            <font-awesome-icon icon="envelope" />
           </span>
         </div>
       </div>
@@ -50,7 +50,7 @@
             required
           />
           <span class="icon is-small is-left">
-            <i class="fas fa-key"></i>
+            <font-awesome-icon icon="key" />
           </span>
         </div>
       </div>
@@ -123,27 +123,13 @@ export default {
       }
     },
   },
-  beforeCreate() {
-    const fontAwesome = document.createElement('script');
-    fontAwesome.setAttribute(
-      'src',
-      'https://use.fontawesome.com/releases/v5.3.1/js/all.js',
-    );
-    document.head.appendChild(fontAwesome);
-  },
 };
 </script>
 
 <style scoped>
-/* Set Page Properties */
-html,
-body {
-  background-color: #3273dc;
-  box-sizing: border-box;
-  margin: 0;
-}
 /* Overall Form Set-Up */
 .container {
+  height: 95vh;
   background-color: white;
   border-radius: 20px;
   display: flex;
@@ -151,7 +137,6 @@ body {
   font-family: 'Fira Sans', sans-serif;
   justify-content: center;
   margin: auto;
-  margin-top: 15vh;
   max-width: 415px;
   overflow-y: hidden;
   padding: 30px 50px;

@@ -50,9 +50,6 @@ export default {
     };
   },
   computed: {
-    channel() {
-      return this.$route.params.channel;
-    },
     messages() {
       return this.msgs[this.channel];
     },

@@ -42,11 +42,7 @@ export default {
       newMessage: '',
     };
   },
-  computed: {
-    channel() {
-      return this.$route.params.channel;
-    },
-  },
+  computed: {},
   methods: {
     async createMessage() {
       // 用户发送消息

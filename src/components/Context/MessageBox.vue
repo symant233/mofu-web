@@ -33,11 +33,6 @@ export default {
     msgs: Array,
     end: String, // 加载更多后, 最底下的消息ID
   },
-  computed: {
-    channel() {
-      return this.$route.params.channel;
-    },
-  },
   methods: {
     scrollRear() {
       const el = this.$el;

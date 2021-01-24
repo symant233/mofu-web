@@ -10,20 +10,25 @@ import App from './App';
 import router from './router';
 import store from './store';
 import { SENTRY_DSN } from './core/constants';
+import './core/mixin';
 
 library.add(fas);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
-console.log(`Environment: ${process.env.NODE_ENV}`);
+const ENV = process.env.NODE_ENV;
+console.log(`Environment: ${ENV}`);
 
-Sentry.init({
-  Vue,
-  dsn: SENTRY_DSN,
-  autoSessionTracking: true,
-  integrations: [new Integrations.BrowserTracing()],
-  tracesSampleRate: 1.0,
-});
+if (ENV === 'production') {
+  // 生产环境启用 Sentry
+  Sentry.init({
+    Vue,
+    dsn: SENTRY_DSN,
+    autoSessionTracking: true,
+    integrations: [new Integrations.BrowserTracing()],
+    tracesSampleRate: 1.0,
+  });
+}
 
 Vue.directive('focus', {
   // 自定义指令 v-focus

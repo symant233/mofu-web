@@ -1,6 +1,5 @@
 const state = () => ({
   groups: {},
-  groupList: [],
 });
 
 const getters = {};
@@ -10,9 +9,6 @@ const actions = {};
 const mutations = {
   setGroups(state, payload) {
     state.groups = payload;
-  },
-  setGroupList(state, payload) {
-    state.groupList = payload;
   },
 };
 

@@ -25,6 +25,7 @@ export default {
     async tryAuth() {
       try {
         const data = await api.myDetail();
+        this.$store.commit('user/setUser', data);
         this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
       } catch (err) {
         api.warn(err);
@@ -33,6 +34,7 @@ export default {
     },
   },
   mounted() {
+    this.setApiToken(); // mixin
     this.tryAuth();
   },
 };

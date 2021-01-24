@@ -32,9 +32,6 @@ export default {
       }
       return str;
     },
-    channel() {
-      return this.$route.params.channel;
-    },
   },
   mounted() {
     socket.on('typing', (data) => {

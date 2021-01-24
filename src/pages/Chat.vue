@@ -1,7 +1,7 @@
 <template>
   <section class="g-main">
     <navbar></navbar>
-    <side-bar :groups="groupList"></side-bar>
+    <side-bar></side-bar>
     <context :group="groups[channel]"></context>
     <member-list :group="groups[channel]"></member-list>
     <warning></warning>
@@ -30,7 +30,6 @@ export default {
       try {
         const groups = {};
         const rs = await api.myGroups();
-        this.$store.commit('group/setGroupList', rs);
         rs.forEach((grp) => {
           // 设置 groups 的键值对 方便直接用 id 查找
           // this.$set(this.groups, grp.id, grp);
@@ -54,32 +53,26 @@ export default {
     },
   },
   beforeMount() {
-    if (this.groupList.length === 0) this.myGroups();
+    this.setApiToken(); // mixin
+    if (Object.keys(this.groups).length === 0) this.myGroups();
     if (!this.user.id) this.myDetail();
   },
   mounted() {
     // 发送 token 进行 socket 验证
     const token = localStorage.getItem('token');
     if (!token) {
-      const str = 'localStorage token not found!';
-      this.setWarn(str);
+      this.setWarn('localStorage token not found!');
       this.$router.push({ name: 'mofu-login' });
     }
     socket.emit('auth', token);
-    socket.on('group join', (data) => {
-      this.groupList.push(data);
-      socket.emit('join a group', data.id);
-    });
+    // socket.on('group join', (data) => {
+    //   this.groupList.push(data);
+    //   socket.emit('join a group', data.id);
+    // });
   },
   computed: {
     groups() {
       return this.$store.state.group.groups;
-    },
-    groupList() {
-      return this.$store.state.group.groupList;
-    },
-    channel() {
-      return this.$route.params.channel;
     },
     user() {
       return this.$store.state.user.user;
