@@ -62,7 +62,6 @@ export default {
 .scrollbar {
   margin-top: 1.6px;
   float: left;
-  width: 65px;
   overflow-x: hidden;
   overflow-y: scroll;
 }

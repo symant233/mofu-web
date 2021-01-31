@@ -26,6 +26,7 @@ class Api {
     }
   };
 
+  // ! auth
   login = async (email, passwd) => {
     const rs = await this.api.post('/auth/login', {
       email,
@@ -43,11 +44,13 @@ class Api {
     return rs.data;
   };
 
+  // ! user
   myDetail = async () => {
     const rs = await this.api.get('/user/@me/detail', this.conf);
     return rs.data;
   };
 
+  // ! group
   myGroups = async () => {
     const rs = await this.api.get('/group/@me', this.conf);
     return rs.data;
@@ -84,6 +87,26 @@ class Api {
     const rs = await this.api.post(
       '/group/10474362077060/request',
       {},
+      this.conf,
+    );
+    return rs.data;
+  };
+
+  // ! relation
+  requestFriend = async (userId) => {
+    const rs = await this.api.post(`/relation/create/${userId}`, {}, this.conf);
+    return rs.data;
+  };
+
+  listMyRelations = async () => {
+    const rs = await this.api.get('/relation/@my', this.conf);
+    return rs.data;
+  };
+
+  createDirectMessage = async (relationId, content) => {
+    const rs = await this.api.post(
+      `/relation/${relationId}/message`,
+      { content },
       this.conf,
     );
     return rs.data;

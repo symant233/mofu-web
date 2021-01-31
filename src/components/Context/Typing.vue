@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <span class="tag is-warning is-light" id="typing" v-if="typing"
-      >typing: {{ typing }}</span
+      >输入中: {{ typing }}</span
     >
   </transition>
 </template>
@@ -27,7 +27,7 @@ export default {
           str += l[0];
         } else if (l.length >= 2) {
           str += `${l[0]}, ${l[1]}`;
-          if (l.length !== 2) str += ' and more';
+          if (l.length !== 2) str += ' 以及更多';
         }
       }
       return str;

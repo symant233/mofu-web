@@ -1,3 +1,9 @@
+全局 Mixin:
+```js
+this.channel // 计算属性-路由params
+this.setApiToken() // 从 localStorage 设置 api 的 token
+```
+
 Methods:
 
 ```js
