@@ -5,9 +5,6 @@
 <script>
 export default {
   name: 'member-list',
-  props: {
-    group: Object,
-  },
 };
 </script>
 

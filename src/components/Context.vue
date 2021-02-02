@@ -1,6 +1,6 @@
 <template>
   <div id="context">
-    <group-title :group="group"></group-title>
+    <group-title></group-title>
     <wumpus v-show="wumpus"></wumpus>
 
     <message-box :msgs="msgs[channel]" :end="end" :key="channel">
@@ -36,9 +36,6 @@ export default {
     ChatInput,
     Typing,
   },
-  props: {
-    group: Object,
-  },
   data() {
     return {
       showInput: true, // props
@@ -54,22 +51,25 @@ export default {
       return this.msgs[this.channel];
     },
   },
-
   methods: {
     async loadMoreMessages() {
       const before = this.messages ? this.messages[0].id : '';
-      await this.listGroupMessages(before);
+      await this.listMessages(before);
     },
     routerToMe() {
       this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
     },
-    async listGroupMessages(beforeMsgId = '') {
+    async listMessages(beforeMsgId = '') {
       let rs;
       // 防止等待返回数据时切换频道
       const requestChannel = this.channel;
-      const msgs = this.messages;
+      const msgs = this.messages; // 当前频道的消息
       try {
-        rs = await api.listGroupMessages(requestChannel, beforeMsgId);
+        if (this.group.dm) {
+          rs = await api.listDirectMessages(requestChannel, beforeMsgId);
+        } else {
+          rs = await api.listGroupMessages(requestChannel, beforeMsgId);
+        }
         this.end = rs[rs.length - 1].id;
         if (msgs) {
           this.msgs[requestChannel] = [...rs, ...msgs];
@@ -77,12 +77,13 @@ export default {
           this.$set(this.msgs, requestChannel, rs);
         }
       } catch (err) {
+        api.warn(err);
+        if (!err.response) return;
         if (err.response.status === 404) this.routerToMe();
         // 没有更多消息, 关闭加载按钮
         if (err.response.status === 400) {
           this.$set(this.noMoreMsg, requestChannel, true);
         }
-        api.warn(err);
       }
     },
     listenMessages() {
@@ -96,7 +97,7 @@ export default {
         // messages 非空, 跳过 api 请求
         return;
       } else if (this.channel === '@me') return;
-      this.listGroupMessages();
+      this.listMessages();
     },
   },
   watch: {
@@ -119,6 +120,13 @@ export default {
         this.showLoader = true;
       }
     },
+    group(newV, oldV) {
+      if (oldV === undefined) {
+        // 本来放在 monted 只运行一次
+        // 解决 this.group 是空无法访问 dm 属性
+        this.listMessages();
+      }
+    },
   },
   mounted() {
     if (this.channel === '@me') {
@@ -126,7 +134,6 @@ export default {
       this.wumpus = true;
       return;
     }
-    this.listGroupMessages();
     this.listenMessages(); // socket 监听
   },
 };

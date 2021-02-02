@@ -1,20 +1,30 @@
 <template>
-  <div id="group">
-    <span>{{ group ? group.name : '&nbsp;' }}</span>
+  <div id="group-title">
+    <span>{{ title || '&nbsp;' }}</span>
   </div>
 </template>
 
 <script>
 export default {
   name: 'group-title',
-  props: {
-    group: Object,
+  computed: {
+    title() {
+      let t;
+      if (this.group !== undefined) {
+        if (this.group.dm) {
+          t = this.group.users.nick;
+        } else {
+          t = this.group.name;
+        }
+      }
+      return t;
+    },
   },
 };
 </script>
 
 <style lang="scss">
-#group {
+#group-title {
   padding: 13px;
   font-weight: bold;
   box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05),

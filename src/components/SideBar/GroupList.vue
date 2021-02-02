@@ -5,20 +5,38 @@
       :key="g.id"
       :class="['group', channel === g.id ? 'active' : '']"
     >
-      <article class="media" @click="routing(g.id)">
-        <figure class="media-left">
-          <p class="image is-48x48">
-            <img :src="g.avatar || '/static/images/akari.jpg'" />
-          </p>
-        </figure>
-        <div class="media-content">
-          <div class="content message-content">
-            <p>
-              <strong>{{ g.name }}</strong>
+      <template v-if="g.dm === false">
+        <article class="media" @click="routing(g.id)">
+          <figure class="media-left">
+            <p class="image is-48x48">
+              <img :src="g.avatar || '/static/images/akari.jpg'" />
             </p>
+          </figure>
+          <div class="media-content">
+            <div class="content message-content">
+              <p>
+                <strong>{{ g.name }}</strong>
+              </p>
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </template>
+      <template v-else-if="g.dm === true">
+        <article class="media" @click="routing(g.id)">
+          <figure class="media-left">
+            <p class="image is-48x48">
+              <img :src="g.users.avatar || '/static/images/akari.jpg'" />
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content message-content">
+              <p>
+                <strong>{{ g.users.nick }}</strong>
+              </p>
+            </div>
+          </div>
+        </article>
+      </template>
     </div>
   </div>
 </template>

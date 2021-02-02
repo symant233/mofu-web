@@ -51,7 +51,7 @@ class Api {
   };
 
   // ! group
-  myGroups = async () => {
+  listMyGroups = async () => {
     const rs = await this.api.get('/group/@me', this.conf);
     return rs.data;
   };
@@ -107,6 +107,14 @@ class Api {
     const rs = await this.api.post(
       `/relation/${relationId}/message`,
       { content },
+      this.conf,
+    );
+    return rs.data;
+  };
+
+  listDirectMessages = async (relationId, msgId = '') => {
+    const rs = await this.api.get(
+      `/relation/${relationId}/messages?limit=${MSG_LIMIT}&before=${msgId}`,
       this.conf,
     );
     return rs.data;

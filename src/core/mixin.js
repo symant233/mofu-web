@@ -8,10 +8,16 @@ Vue.mixin({
       const token = localStorage.getItem('token');
       api.conf.headers.Authorization = `Bearer ${token}`;
     },
+    setWarn(message) {
+      this.$store.dispatch('common/setWarn', String(message));
+    },
   },
   computed: {
     channel() {
       return this.$route.params.channel;
+    },
+    group() {
+      return this.$store.state.group.groups[this.channel];
     },
   },
 });

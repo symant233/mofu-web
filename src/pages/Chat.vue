@@ -2,8 +2,8 @@
   <section class="g-main">
     <navbar></navbar>
     <side-bar></side-bar>
-    <context :group="groups[channel]"></context>
-    <member-list :group="groups[channel]"></member-list>
+    <context></context>
+    <member-list></member-list>
     <warning></warning>
   </section>
 </template>
@@ -24,16 +24,19 @@ export default {
     return {};
   },
   methods: {
-    async myGroups() {
-      // 获取所有群组
-      if (this.groups[this.channel]) return;
+    async myChannels() {
+      if (this.group) return;
       try {
+        // 获取所有群组
         const groups = {};
-        const rs = await api.myGroups();
+        const rs = await api.listMyGroups();
         rs.forEach((grp) => {
-          // 设置 groups 的键值对 方便直接用 id 查找
-          // this.$set(this.groups, grp.id, grp);
-          groups[grp.id] = grp;
+          groups[grp.id] = { ...grp, dm: false }; // 类型1为群组
+        });
+        // 获取私聊
+        const rl = await api.listMyRelations();
+        rl.forEach((r) => {
+          groups[r.id] = { ...r, dm: true }; // 类型2为私聊
         });
         this.$store.commit('group/setGroups', groups);
       } catch (err) {
@@ -48,13 +51,10 @@ export default {
       const data = await api.myDetail();
       this.$store.commit('user/setUser', data);
     },
-    setWarn(message) {
-      this.$store.dispatch('common/setWarn', String(message));
-    },
   },
   beforeMount() {
     this.setApiToken(); // mixin
-    if (Object.keys(this.groups).length === 0) this.myGroups();
+    if (Object.keys(this.groups).length === 0) this.myChannels();
     if (!this.user.id) this.myDetail();
   },
   mounted() {
@@ -65,10 +65,10 @@ export default {
       this.$router.push({ name: 'mofu-login' });
     }
     socket.emit('auth', token);
-    // socket.on('group join', (data) => {
-    //   this.groupList.push(data);
-    //   socket.emit('join a group', data.id);
-    // });
+    socket.on('group join', (group) => {
+      this.$store.commit('group/addGroup', { ...group, dm: false });
+      socket.emit('join a group', group.id);
+    });
   },
   computed: {
     groups() {
