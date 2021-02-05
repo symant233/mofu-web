@@ -69,6 +69,10 @@ export default {
       this.$store.commit('group/addGroup', { ...group, dm: false });
       socket.emit('join a group', group.id);
     });
+    socket.on('relation created', (relation) => {
+      this.$store.commit('group/addGroup', { ...relation, dm: true });
+      socket.emit('join a relation', relation.id);
+    });
   },
   computed: {
     groups() {

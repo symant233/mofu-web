@@ -1,8 +1,9 @@
 <template>
   <transition name="fade">
-    <span class="tag is-warning is-light" id="typing" v-if="typing"
-      >输入中: {{ typing }}</span
-    >
+    <span class="tag is-warning is-light" id="typing" v-if="typing">
+      <template v-if="group.dm">对方正在输入...</template>
+      <template v-else>输入中: {{ typing }}</template>
+    </span>
   </transition>
 </template>
 

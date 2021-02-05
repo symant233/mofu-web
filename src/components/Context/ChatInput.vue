@@ -48,8 +48,13 @@ export default {
       // 用户发送消息
       if (!this.newMessage) return; // 禁止发送空内容
       this.inputDisabled = true;
+      let rs;
       try {
-        const rs = await api.createGroupMessage(this.channel, this.newMessage);
+        if (this.group.dm) {
+          rs = await api.createDirectMessage(this.channel, this.newMessage);
+        } else {
+          rs = await api.createGroupMessage(this.channel, this.newMessage);
+        }
         // rs returns message object
         this.newMessage = ''; // 成功后清空输入框
         this.inputDisabled = false;

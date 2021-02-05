@@ -4,11 +4,12 @@
       <div class="card">
         <header class="card-header">
           <p class="card-header-title">
-            Join a group!
+            寻找伙伴!
           </p>
         </header>
         <div class="card-content">
-          <form @submit="join" onsubmit="return false">
+          <form @submit.prevent="joinGroup">
+            <label class="label">加入群组:</label>
             <div class="field has-addons">
               <div class="control" style="width: 100%;">
                 <input
@@ -16,32 +17,54 @@
                   type="text"
                   pattern="[0-9]+"
                   placeholder="Group ID"
-                  title="Only number accepted."
-                  v-model="joinId"
+                  title="请勿输入除数字外的字符."
+                  v-model="groupId"
                 />
               </div>
               <div class="control">
-                <input type="submit" class="button is-info" value="Join" />
+                <input type="submit" class="button is-info" value="->" />
               </div>
             </div>
-            <p class="help is-danger" v-if="errorMessage">
-              {{ errorMessage }}
+            <p class="help is-danger" v-if="errGroupMsg">
+              {{ errGroupMsg }}
+            </p>
+          </form>
+
+          <form @submit.prevent="joinUser" id="join-user">
+            <label class="label">添加好友:</label>
+            <div class="field has-addons">
+              <div class="control" style="width: 100%;">
+                <input
+                  class="input"
+                  type="text"
+                  pattern="[0-9]+"
+                  placeholder="User ID"
+                  title="请勿输入除数字外的字符."
+                  v-model="userId"
+                />
+              </div>
+              <div class="control">
+                <input type="submit" class="button is-primary" value="->" />
+              </div>
+            </div>
+            <p class="help is-danger" v-if="errUserMsg">
+              {{ errUserMsg }}
             </p>
           </form>
         </div>
         <footer class="card-footer">
           <p class="card-footer-item" @click="joinDevGroup">
-            <a><span>Join Dev Group</span></a>
+            <a><span>加入开发者频道</span></a>
           </p>
           <p class="card-footer-item" @click="toggleModal">
-            <a><span>Cancel</span></a>
+            <a><span>取消</span></a>
           </p>
         </footer>
       </div>
     </modal>
     <div
       class="u-icon-add"
-      id="mofu-join-item"
+      id="mofu-join-button"
       @click.prevent="toggleModal"
     ></div>
   </div>
@@ -57,22 +80,23 @@ export default {
   data() {
     return {
       showModal: false,
-      joinId: null,
-      errorMessage: '',
+      groupId: null,
+      userId: null,
+      errGroupMsg: '',
+      errUserMsg: '',
     };
   },
   methods: {
     toggleModal() {
       this.showModal = !this.showModal;
     },
-    async join() {
-      const id = this.joinId;
+    async joinGroup() {
       try {
-        await api.requestGroupMember(id);
+        await api.requestGroupMember(this.groupId);
         this.toggleModal();
-        this.errorMessage = '';
+        this.errGroupMsg = '';
       } catch (err) {
-        this.errorMessage = err.response.data;
+        this.errGroupMsg = err.response.data;
         api.warn(err);
       }
     },
@@ -80,9 +104,19 @@ export default {
       try {
         await api.joinDevGroup();
         this.toggleModal();
-        this.errorMessage = '';
+        this.errGroupMsg = '';
       } catch (err) {
-        this.errorMessage = err.response.data;
+        this.errGroupMsg = err.response.data;
+        api.warn(err);
+      }
+    },
+    async joinUser() {
+      try {
+        await api.requestFriend(this.userId);
+        this.toggleModal();
+        this.errUserMsg = '';
+      } catch (err) {
+        this.errUserMsg = err.response.data;
         api.warn(err);
       }
     },
@@ -93,8 +127,11 @@ export default {
 <style lang="scss">
 #mofu-join {
   margin-top: auto;
+  #join-user {
+    padding-top: 7px;
+  }
 }
-#mofu-join-item {
+#mofu-join-button {
   display: block;
   position: relative;
   margin: 13px auto;
