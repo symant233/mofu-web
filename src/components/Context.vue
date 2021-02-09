@@ -3,7 +3,7 @@
     <group-title></group-title>
     <wumpus v-show="wumpus"></wumpus>
 
-    <message-box :msgs="msgs[channel]" :end="end" :key="channel">
+    <message-box :msgs="msgs[channel]" :end.sync="end" :key="channel">
       <button-loader
         :loader-method="loadMoreMessages"
         v-if="!noMoreMsg[channel] && showLoader && showInput"

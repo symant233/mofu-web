@@ -21,7 +21,7 @@ export default {
     },
     maxWidth: {
       type: Number,
-      required: true,
+      default: null,
     },
   },
   methods: {

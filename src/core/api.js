@@ -78,6 +78,7 @@ class Api {
     return rs.data;
   };
 
+  // ! member
   requestGroupMember = async (groupId) => {
     const rs = await this.api.post(`/group/${groupId}/request`, {}, this.conf);
     return rs.data;

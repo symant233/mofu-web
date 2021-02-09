@@ -1,27 +1,44 @@
 <template>
   <div id="navbar">
-    <figure id="user-avatar">
+    <figure id="user-avatar" @click="toggleProfile">
       <img :src="user.avatar" />
     </figure>
+    <modal :show-modal.sync="showProfile">
+      <profile></profile>
+    </modal>
+
     <div class="navbar-item">
       <font-awesome-icon icon="comment" />
     </div>
     <div class="navbar-item">
       <font-awesome-icon icon="address-book" />
     </div>
+
     <join-group></join-group>
   </div>
 </template>
 
 <script>
+import Modal from '../Common/Modal';
 import JoinGroup from './JoinGroup';
+import Profile from './Profile';
 
 export default {
   name: 'navbar',
-  components: { JoinGroup },
+  components: { JoinGroup, Profile, Modal },
+  data() {
+    return {
+      showProfile: false,
+    };
+  },
   computed: {
     user() {
       return this.$store.state.user.user;
+    },
+  },
+  methods: {
+    toggleProfile() {
+      this.showProfile = !this.showProfile;
     },
   },
 };
