@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div class="modal is-active" v-if="showModal">
+    <div class="modal" v-if="showModal">
       <div class="modal-background" @click="toggleModal"></div>
       <div class="modal-content" :style="{ maxWidth: maxWidth + 'px' }">
         <slot></slot>
@@ -35,8 +35,12 @@ export default {
 </script>
 
 <style lang="scss">
-.modal-content {
-  width: 100%; // 覆盖 bulma
+.modal {
+  // 覆盖 bulma
+  display: flex;
+  .modal-content {
+    width: 100%;
+  }
 }
 .fade-enter-active,
 .fade-leave-active {

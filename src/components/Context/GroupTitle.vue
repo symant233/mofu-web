@@ -1,6 +1,9 @@
 <template>
   <div id="group-title">
     <span>{{ title || '&nbsp;' }}</span>
+    <div id="info-icon">
+      <font-awesome-icon icon="info-circle" />
+    </div>
   </div>
 </template>
 
@@ -29,5 +32,9 @@ export default {
   font-weight: bold;
   box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05),
     0 2px 0 rgba(4, 4, 5, 0.05);
+}
+#info-icon {
+  float: right;
+  color: #b5b5b5;
 }
 </style>

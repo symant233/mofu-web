@@ -8,6 +8,7 @@
         v-model="newMessage"
         @keyup.enter="createMessage"
         :disabled="inputDisabled"
+        ref="input"
         v-focus
       />
     </div>
@@ -58,6 +59,9 @@ export default {
         // rs returns message object
         this.newMessage = ''; // 成功后清空输入框
         this.inputDisabled = false;
+        this.$nextTick(() => {
+          this.$refs.input.focus(); // 输入后重新focus
+        });
       } catch (err) {
         api.warn(err);
         this.inputDisabled = false;

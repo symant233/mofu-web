@@ -61,7 +61,8 @@ export default {
     // 发送 token 进行 socket 验证
     const token = localStorage.getItem('token');
     if (!token) {
-      this.setWarn('localStorage token not found!');
+      // this.setWarn('localStorage token not found!');
+      this.$toast.error('localStorage token not found!');
       this.$router.push({ name: 'mofu-login' });
     }
     socket.emit('auth', token);

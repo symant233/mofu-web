@@ -1,5 +1,10 @@
 <template>
-  <div id="button-loader" v-if="loaderEnabled" @click="loaderMethod">
+  <div
+    id="button-loader"
+    v-if="loaderEnabled"
+    @click="loaderMethod"
+    class="unselectable"
+  >
     加载更多
   </div>
 </template>

@@ -79,7 +79,10 @@ export default {
       } catch (err) {
         api.warn(err);
         if (!err.response) return;
-        if (err.response.status === 404) this.routerToMe();
+        if (err.response.status === 404) {
+          this.$toast.warning('[404] 请求失败');
+          this.routerToMe();
+        }
         // 没有更多消息, 关闭加载按钮
         if (err.response.status === 400) {
           this.$set(this.noMoreMsg, requestChannel, true);

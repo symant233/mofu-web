@@ -6,7 +6,7 @@
       :class="['group', channel === g.id ? 'active' : '']"
     >
       <template v-if="g.dm === false">
-        <article class="media" @click="routing(g.id)">
+        <article class="media unselectable" @click="routing(g.id)">
           <figure class="media-left">
             <p class="image is-48x48">
               <img :src="g.avatar || '/static/images/akari.jpg'" />
@@ -22,7 +22,7 @@
         </article>
       </template>
       <template v-else-if="g.dm === true">
-        <article class="media" @click="routing(g.id)">
+        <article class="media unselectable" @click="routing(g.id)">
           <figure class="media-left">
             <p class="image is-48x48">
               <img :src="g.users.avatar || '/static/images/akari.jpg'" />

@@ -39,4 +39,11 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #777;
 }
+*.unselectable {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 </style>

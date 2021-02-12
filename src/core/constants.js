@@ -7,4 +7,19 @@ module.exports = {
   SENTRY_DSN:
     'https://99678f2fe21349c3bfe9e283b6555efd@o424857.ingest.sentry.io/5357211',
   MSG_LIMIT: 30,
+  TOAST: {
+    transition: 'Vue-Toastification__bounce',
+    position: 'top-right',
+    timeout: 5000,
+    closeOnClick: false,
+    pauseOnFocusLoss: true,
+    pauseOnHover: true,
+    draggable: true,
+    draggablePercent: 0.5,
+    showCloseButtonOnHover: true,
+    hideProgressBar: false,
+    closeButton: 'button',
+    icon: true,
+    rtl: false,
+  },
 };

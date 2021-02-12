@@ -7,27 +7,26 @@
       :id="msg.id"
       class="m-message"
     >
-      <p v-if="omit(msg, index)" class="m-omit">
+      <p v-if="omit(msg, index)" class="m-omit m-message-content">
         {{ msg.content }}
       </p>
       <article class="media" v-else>
         <figure class="media-left">
-          <p class="image is-48x48">
+          <p class="image is-48x48 unselectable">
             <img :src="msg.author.avatar || '/static/images/akari.jpg'" />
           </p>
         </figure>
         <div class="media-content">
           <div class="content m-message-content">
-            <p>
+            <p class="unselectable">
               <strong>{{ msg.author.nick }}</strong>
-              <small style="font-size: 0.775em;">{{
+              <small class="m-time">{{
                 new Date(msg.timestamp).toLocaleString('zh-CN', {
                   hour12: false,
                 })
               }}</small>
-              <br />
-              {{ msg.content }}
             </p>
+            {{ msg.content }}
           </div>
         </div>
       </article>
@@ -103,12 +102,12 @@ export default {
       word-wrap: break-word;
       word-break: break-all;
       padding-right: 33px;
-    }
-    .m-omit {
-      word-wrap: break-word;
-      word-break: break-all;
-      padding-right: 33px;
-      margin-left: 64px;
+      &.m-omit {
+        margin-left: 64px;
+      }
+      .m-time {
+        font-size: 0.775em;
+      }
     }
   }
   .m-message:hover {
