@@ -10,7 +10,7 @@ module.exports = {
   TOAST: {
     transition: 'Vue-Toastification__bounce',
     position: 'top-right',
-    timeout: 5000,
+    timeout: 3000,
     closeOnClick: false,
     pauseOnFocusLoss: true,
     pauseOnHover: true,

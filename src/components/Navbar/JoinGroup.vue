@@ -97,7 +97,7 @@ export default {
         this.errGroupMsg = '';
       } catch (err) {
         this.errGroupMsg = err.response.data;
-        api.warn(err);
+        this.handler(err);
       }
     },
     async joinDevGroup() {
@@ -107,7 +107,7 @@ export default {
         this.errGroupMsg = '';
       } catch (err) {
         this.errGroupMsg = err.response.data;
-        api.warn(err);
+        this.handler(err);
       }
     },
     async joinUser() {
@@ -117,8 +117,12 @@ export default {
         this.errUserMsg = '';
       } catch (err) {
         this.errUserMsg = err.response.data;
-        api.warn(err);
+        this.handler(err);
       }
+    },
+    handler(err) {
+      api.warn(err);
+      this.$toast.warning(err.response.data);
     },
   },
 };

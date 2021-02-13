@@ -3,7 +3,7 @@
     <div class="mofu-warning" v-if="show">
       <article class="message is-danger">
         <div class="message-body message-content">
-          🔥 Error occurs: <br />
+          🔥 发生错误: <br />
           {{ warn }}
         </div>
       </article>

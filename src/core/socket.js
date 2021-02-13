@@ -1,11 +1,9 @@
 import IO from 'socket.io-client';
 import { WS } from './constants';
 
-const url = `${WS}/msg`;
-
-const msg = IO(url);
-msg.on('auth', (data) => {
+const io = IO(WS);
+io.on('auth', (data) => {
   console.info('[socket] login', data);
 });
 
-export default msg;
+export default io;

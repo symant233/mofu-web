@@ -64,6 +64,7 @@ export default {
         });
       } catch (err) {
         api.warn(err);
+        this.$toast.error('发送失败.');
         this.inputDisabled = false;
       }
     },

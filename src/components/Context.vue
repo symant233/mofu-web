@@ -77,7 +77,6 @@ export default {
           this.$set(this.msgs, requestChannel, rs);
         }
       } catch (err) {
-        api.warn(err);
         if (!err.response) return;
         if (err.response.status === 404) {
           this.$toast.warning('[404] 请求失败');

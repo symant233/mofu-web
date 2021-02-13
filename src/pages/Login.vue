@@ -98,11 +98,12 @@ export default {
         const rs = await api.login(this.email, this.passwd);
         localStorage.setItem('token', rs.token);
         api.conf.headers.Authorization = `Bearer ${rs.token}`;
-        console.info('-> login succeed, cookie set.');
+        this.$toast.success('登陆成功!');
         this.invalid = false;
         this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
       } catch (err) {
         this.invalid = true;
+        this.$toast.error('登陆失败.');
         api.warn(err);
       }
     },
