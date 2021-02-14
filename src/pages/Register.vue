@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <h2 class="title is-3 has-text-centered has-text-weight-bold">Register</h2>
     <form @submit.prevent="register">
+      <h2 class="title is-3 has-text-centered has-text-weight-bold">
+        Register
+      </h2>
       <!-- nickname -->
       <div class="field">
         <label class="label">Nick Name</label>
@@ -108,8 +110,24 @@ export default {
     };
   },
   methods: {
+    len(str) {
+      // 英文1字符 中文2字符 返回串长度
+      let count = 0;
+      for (let i = 0; i < str.length; i += 1) {
+        // eslint-disable-next-line no-bitwise
+        if ((str.charCodeAt(i) & 0xff00) !== 0) {
+          count += 1;
+        }
+        count += 1;
+      }
+      return count;
+    },
     async register() {
       if (!this.nick || !this.email || !this.passwd) return;
+      if (this.len(this.nick) > 16) {
+        this.$toast.info('昵称长度不能超过16');
+        return;
+      }
       try {
         const rs = await api.register(this.nick, this.email, this.passwd);
         localStorage.setItem('token', rs.token);
@@ -119,7 +137,7 @@ export default {
         this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
       } catch (err) {
         this.error = true;
-        this.$toast.error('注册失败.');
+        this.$toast.error('注册失败');
         api.warn(err);
       }
     },

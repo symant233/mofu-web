@@ -122,7 +122,7 @@ export default {
     },
     handler(err) {
       api.warn(err);
-      this.$toast.warning(err.response.data);
+      this.$toast.warning(err.response.data.message);
     },
   },
 };

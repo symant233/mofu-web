@@ -84,6 +84,7 @@ export default {
         }
         // 没有更多消息, 关闭加载按钮
         if (err.response.status === 400) {
+          this.$toast.info('没有更多消息');
           this.$set(this.noMoreMsg, requestChannel, true);
         }
       }

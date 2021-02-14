@@ -42,7 +42,7 @@ export default {
       } catch (err) {
         if (err.response.status === 401) {
           // 身份验证失败 重定向到登陆页
-          this.$toast.error('身份验证失败,请重新登陆.');
+          this.$toast.error('身份验证失败,请重新登陆');
           this.$router.push({ name: 'mofu-login' });
         }
         api.warn(err);
@@ -61,12 +61,15 @@ export default {
         this.$store.commit('group/addGroup', { ...relation, dm: true });
         socket.emit('join a relation', relation.id);
       });
+      socket.on('news', (message) => {
+        this.$toast(message);
+      });
       socket.on('disconnect', () => {
-        this.$toast.warning('Socket已断开.');
+        this.$toast.warning('Socket已断开');
       });
       socket.on('reconnect', () => {
         socket.emit('auth', localStorage.getItem('token'));
-        this.$toast.success('Socket已重连.');
+        this.$toast.success('Socket已重连');
       });
     },
   },

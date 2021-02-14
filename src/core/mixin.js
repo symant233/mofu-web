@@ -11,6 +11,11 @@ Vue.mixin({
     setWarn(message) {
       this.$store.dispatch('common/setWarn', String(message));
     },
+    getTime(timestamp) {
+      return new Date(timestamp).toLocaleString('zh-CN', {
+        hour12: false,
+      });
+    },
   },
   computed: {
     channel() {

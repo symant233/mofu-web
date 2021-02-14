@@ -65,15 +65,15 @@ export default {
       display: block;
     }
     #member-content {
-      position: absolute;
+      position: fixed;
       top: 0;
       right: 0;
       width: 15rem;
       margin-top: 52px;
-      height: 93vh;
+      height: calc(100vh - 52px);
       display: none;
       &.active {
-        display: flex;
+        display: block;
       }
     }
   }

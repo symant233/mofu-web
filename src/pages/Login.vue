@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h2 class="title is-3 has-text-centered has-text-weight-bold">Sign In</h2>
     <form @submit.prevent="login">
+      <h2 class="title is-3 has-text-centered has-text-weight-bold">Sign In</h2>
       <!-- Email -->
       <div class="field">
         <label class="label">Email Address</label>
@@ -103,7 +103,7 @@ export default {
         this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
       } catch (err) {
         this.invalid = true;
-        this.$toast.error('登陆失败.');
+        this.$toast.error('登陆失败');
         api.warn(err);
       }
     },
