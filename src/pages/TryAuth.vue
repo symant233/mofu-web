@@ -34,8 +34,12 @@ export default {
     },
   },
   mounted() {
-    this.setApiToken(); // mixin
-    this.tryAuth();
+    if (localStorage.getItem('token')) {
+      this.setApiToken(); // mixin
+      this.tryAuth();
+    } else {
+      this.$router.push({ name: 'mofu-login' });
+    }
   },
 };
 </script>

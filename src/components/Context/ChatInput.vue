@@ -1,6 +1,6 @@
 <template>
   <div id="input" class="field has-addons" v-if="showInput">
-    <div class="control is-expanded">
+    <div class="control is-expanded unselectable">
       <input
         class="input"
         type="text"

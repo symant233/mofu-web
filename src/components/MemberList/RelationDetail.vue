@@ -1,17 +1,20 @@
 <template>
-  <div id="user-detail">
-    <article class="media unselectable">
-      <figure class="member-avatar">
-        <p class="image">
-          <img :src="user.avatar" />
-        </p>
-      </figure>
-      <div class="media-content">
-        <p class="member-nick">
-          <strong>{{ user.nick }}</strong>
-        </p>
-      </div>
-    </article>
+  <div>
+    <p class="mofu-title unselectable">用户详情</p>
+    <div id="user-detail">
+      <article class="media unselectable">
+        <figure class="member-avatar">
+          <p class="image">
+            <img :src="user.avatar" />
+          </p>
+        </figure>
+        <div class="media-content">
+          <p class="member-nick">
+            <strong>{{ user.nick }}</strong>
+          </p>
+        </div>
+      </article>
+    </div>
   </div>
 </template>
 
@@ -37,6 +40,10 @@ export default {
 .is-36x36 {
   width: 36px;
   height: 36px;
+}
+.mofu-title {
+  font-size: 18px;
+  padding: 12px 12px 0px 12px;
 }
 #user-detail {
   float: left;

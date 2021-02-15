@@ -6,7 +6,7 @@ class Api {
     this.BASE = API_BASE;
     this.api = axios.create({
       baseURL: this.BASE,
-      timeout: 5000,
+      timeout: 4500,
       // 请求头发送 cookies
       withCredentials: true,
     });
