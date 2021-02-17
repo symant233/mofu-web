@@ -15,10 +15,17 @@
         </div>
       </article>
     </div>
+    <input :value="user.id" disabled />
+    <button class="clipboard" :data-clipboard-text="user.id">
+      <img src="/static/images/clippy.svg" alt="复制到剪切板" width="13" />
+    </button>
+    <p>成为好友已经 {{ days }} 天</p>
   </div>
 </template>
 
 <script>
+import Clipboard from 'clipboard';
+
 export default {
   name: 'relation-detail',
   data() {
@@ -32,6 +39,16 @@ export default {
         type: this.group.type,
       };
     },
+    days() {
+      const ms = Date.now() - new Date(this.user.since).getTime();
+      return Math.floor(ms / 1000 / 60 / 60 / 24);
+    },
+  },
+  mounted() {
+    const c = new Clipboard('.clipboard');
+    c.on('success', (e) => {
+      this.$toast.success('复制成功');
+    });
   },
 };
 </script>

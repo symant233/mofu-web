@@ -16,6 +16,7 @@
     "@sentry/tracing": "^6.0.0",
     "@sentry/vue": "^6.0.0",
     "axios": "^0.19.2",
+    "clipboard": "^2.0.6",
     "js-yaml": "^3.13.1",
     "socket.io-client": "^2.3.0",
     "vue": "^2.5.2",
@@ -86,7 +87,9 @@
   ],
   "postcss": {
     "plugins": {
-      "autoprefixer": { "browsers": "last 5 version" }
+      "autoprefixer": {
+        "browsers": "last 5 version"
+      }
     }
   },
   "license": "Apache-2.0"

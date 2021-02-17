@@ -93,6 +93,7 @@
         </div>
       </div>
     </form>
+    <div class="sentry-bg"></div>
   </div>
 </template>
 
@@ -146,26 +147,35 @@ export default {
 </script>
 
 <style scoped>
-/* Overall Form Set-Up */
 .container {
-  height: 95vh;
   background-color: white;
-  border-radius: 20px;
+  border-radius: 5px;
   display: flex;
   flex-flow: column wrap;
   font-family: 'Fira Sans', sans-serif;
   justify-content: center;
   margin: auto;
+  margin-top: calc(((100vh - 480px)) / 2);
   max-width: 415px;
   overflow-y: hidden;
   padding: 30px 50px;
+  box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 20%);
 }
-/* Form Header */
 .title {
   margin-bottom: 1.5rem;
 }
-/* Password reset text */
 .control span {
   color: black;
+}
+.sentry-bg {
+  background: #f2f1f3 url(/static/images/sentry-bg.png);
+  background-size: 340px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0.4;
 }
 </style>
