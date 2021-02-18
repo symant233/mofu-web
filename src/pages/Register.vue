@@ -168,7 +168,7 @@ export default {
   color: black;
 }
 .auth-bg {
-  background: #f2f1f3 url(/static/images/telegram.png);
+  background: #f2f1f3 url(/static/images/telegram.jpg);
   background-size: 86rem;
   position: fixed;
   top: 0;

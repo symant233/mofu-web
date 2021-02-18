@@ -47,6 +47,7 @@ export default {
   methods: {
     async createMessage() {
       // 用户发送消息
+      this.newMessage = this.newMessage.trim();
       if (!this.newMessage) return; // 禁止发送空内容
       this.inputDisabled = true;
       let rs;
