@@ -6,15 +6,22 @@ import 'vue-toastification/dist/index.css';
 import * as Sentry from '@sentry/vue';
 import { Integrations } from '@sentry/tracing';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {
+  faInfoCircle,
+  faComment,
+  faAddressBook,
+  faEnvelope,
+  faKey,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
 import App from './App';
 import router from './router';
 import store from './store';
 import { SENTRY_DSN, TOAST } from './core/constants';
 import './core/mixin';
 
-library.add(fas);
+library.add(faInfoCircle, faComment, faAddressBook, faEnvelope, faKey, faUser);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
@@ -40,11 +47,7 @@ Vue.directive('focus', {
   },
 });
 
-Vue.use(Toast, {
-  maxToasts: 9,
-  newestOnTop: true,
-  ...TOAST,
-});
+Vue.use(Toast, TOAST);
 
 /* eslint-disable no-new */
 new Vue({

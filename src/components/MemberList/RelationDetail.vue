@@ -15,8 +15,13 @@
         </div>
       </article>
     </div>
-    <input :value="user.id" disabled />
-    <button class="clipboard" :data-clipboard-text="user.id">
+    <input id="user-id" :value="user.id" disabled />
+    <button
+      class="clipboard"
+      @click="copy()"
+      data-clipboard-action="copy"
+      :data-clipboard-text="user.id"
+    >
       <img src="/static/images/clippy.svg" alt="复制到剪切板" width="13" />
     </button>
     <p>成为好友已经 {{ days }} 天</p>
@@ -28,9 +33,6 @@ import Clipboard from 'clipboard';
 
 export default {
   name: 'relation-detail',
-  data() {
-    return {};
-  },
   computed: {
     user() {
       return {
@@ -44,11 +46,18 @@ export default {
       return Math.floor(ms / 1000 / 60 / 60 / 24);
     },
   },
-  mounted() {
-    const c = new Clipboard('.clipboard');
-    c.on('success', (e) => {
-      this.$toast.success('复制成功');
-    });
+  methods: {
+    copy() {
+      const c = new Clipboard('.clipboard');
+      c.on('success', (e) => {
+        this.$toast.success('复制成功');
+        c.destroy();
+      });
+      c.on('error', (e) => {
+        this.$toast.error('复制失败');
+        c.destroy();
+      });
+    },
   },
 };
 </script>

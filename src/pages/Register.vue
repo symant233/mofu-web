@@ -93,7 +93,7 @@
         </div>
       </div>
     </form>
-    <div class="sentry-bg"></div>
+    <div class="auth-bg"></div>
   </div>
 </template>
 
@@ -167,15 +167,21 @@ export default {
 .control span {
   color: black;
 }
-.sentry-bg {
-  background: #f2f1f3 url(/static/images/sentry-bg.png);
-  background-size: 340px;
+.auth-bg {
+  background: #f2f1f3 url(/static/images/telegram.png);
+  background-size: 86rem;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   z-index: -1;
-  opacity: 0.4;
+  opacity: 1;
+}
+@media screen and (max-width: 401px) {
+  .container {
+    margin-top: calc(((90vh - 400px)) / 2);
+    border-radius: 0px;
+  }
 }
 </style>

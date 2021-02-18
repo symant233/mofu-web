@@ -9,9 +9,11 @@ module.exports = {
   MSG_LIMIT: 30,
   TOAST: {
     transition: 'Vue-Toastification__bounce',
+    maxToasts: 9,
+    newestOnTop: true,
     position: 'top-right',
     timeout: 3000,
-    closeOnClick: false,
+    closeOnClick: true,
     pauseOnFocusLoss: true,
     pauseOnHover: true,
     draggable: true,
