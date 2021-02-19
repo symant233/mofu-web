@@ -3,7 +3,7 @@ let webSocket = process.env.WS || 'http://127.0.0.1:3001';
 
 if (process.env.NODE_ENV === 'production') {
   apiBase = 'https://mofu.ltd/api';
-  webSocket = 'https://mofu.ltd/socket';
+  webSocket = 'https://mofu.ltd';
 }
 
 module.exports = {
