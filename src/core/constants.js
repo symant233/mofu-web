@@ -1,5 +1,10 @@
-const apiBase = process.env.API_BASE || 'http://127.0.0.1:3000/api/v1';
-const webSocket = process.env.WS || 'http://127.0.0.1:3001';
+let apiBase = process.env.API_BASE || 'http://127.0.0.1:3000/api';
+let webSocket = process.env.WS || 'http://127.0.0.1:3001';
+
+if (process.env.NODE_ENV === 'production') {
+  apiBase = 'https://mofu.ltd/api';
+  webSocket = 'https://mofu.ltd/socket';
+}
 
 module.exports = {
   API_BASE: apiBase,
