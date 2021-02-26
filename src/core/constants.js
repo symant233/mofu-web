@@ -1,4 +1,4 @@
-let apiBase = process.env.API_BASE || 'http://127.0.0.1:3000/api';
+let apiBase = process.env.API_BASE || 'http://127.0.0.1:3000';
 let webSocket = process.env.WS || 'http://127.0.0.1:3001';
 
 if (process.env.NODE_ENV === 'production') {

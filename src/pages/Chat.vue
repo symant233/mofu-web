@@ -66,6 +66,8 @@ export default {
       });
       socket.on('disconnect', () => {
         this.$toast.warning('Socket已断开');
+        socket.close();
+        this.$router.push({ name: 'mofu-auth' });
       });
       socket.on('reconnect', () => {
         socket.emit('auth', localStorage.getItem('token'));
@@ -86,8 +88,9 @@ export default {
       this.$toast.error('localStorage token not found!');
       this.$router.push({ name: 'mofu-login' });
     }
-    socket.emit('auth', token);
     this.socketListener();
+    socket.open();
+    socket.emit('auth', token);
   },
   computed: {
     groups() {
