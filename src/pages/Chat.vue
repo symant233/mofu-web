@@ -40,7 +40,7 @@ export default {
         });
         this.$store.commit('group/setGroups', groups);
       } catch (err) {
-        if (err.response.status === 401) {
+        if (err.response === undefined || err.response.status === 401) {
           // 身份验证失败 重定向到登陆页
           this.$toast.error('身份验证失败,请重新登陆');
           this.$router.push({ name: 'mofu-login' });
@@ -66,8 +66,10 @@ export default {
       });
       socket.on('disconnect', () => {
         this.$toast.warning('Socket已断开');
-        socket.close();
-        this.$router.push({ name: 'mofu-auth' });
+        if (process.env.NODE_ENV !== 'development') {
+          socket.close();
+          this.$router.push({ name: 'mofu-auth' });
+        }
       });
       socket.on('reconnect', () => {
         socket.emit('auth', localStorage.getItem('token'));
@@ -89,7 +91,7 @@ export default {
       this.$router.push({ name: 'mofu-login' });
     }
     this.socketListener();
-    socket.open();
+    if (process.env.NODE_ENV !== 'development') socket.open();
     socket.emit('auth', token);
   },
   computed: {

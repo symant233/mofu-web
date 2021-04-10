@@ -40,6 +40,7 @@ export default {
     return {
       timeout: 0,
       inputDisabled: false,
+      stopTyping: true,
       newMessage: '',
     };
   },

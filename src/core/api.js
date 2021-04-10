@@ -6,7 +6,7 @@ class Api {
     this.BASE = API_BASE;
     this.api = axios.create({
       baseURL: this.BASE,
-      timeout: 4500,
+      timeout: 5000,
       // 请求头发送 cookies
       withCredentials: true,
     });
@@ -118,6 +118,11 @@ class Api {
       `/relation/${relationId}/messages?limit=${MSG_LIMIT}&before=${msgId}`,
       this.conf,
     );
+    return rs.data;
+  };
+
+  listAuditLogs = async (page, passwd) => {
+    const rs = await this.api.post('/audit', { page, passwd });
     return rs.data;
   };
 }
