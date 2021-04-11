@@ -1,8 +1,31 @@
 <template>
   <div id="navbar">
-    <figure id="user-avatar" @click="toggleProfile">
-      <img :src="user.avatar" />
-    </figure>
+    <div class="dropdown is-hoverable">
+      <div class="dropdown-trigger" style="margin:auto;">
+        <figure id="user-avatar" aria-haspopup="true" aria-controls="mofu-menu">
+          <img :src="user.avatar" />
+        </figure>
+      </div>
+      <div class="dropdown-menu" id="mofu-menu" role="menu">
+        <div class="dropdown-content">
+          <a class="dropdown-item" @click="toggleProfile">
+            📑 账号资料
+          </a>
+          <hr class="dropdown-divider" />
+          <a class="dropdown-item" @click="logIn">
+            🔄 切换用户
+          </a>
+          <a class="dropdown-item" @click="logOut">
+            ❎ 登出
+          </a>
+          <hr class="dropdown-divider" />
+          <div class="dropdown-item">
+            🌟 在<code>mofu</code>的第 <b>{{ days }}</b> 天
+          </div>
+        </div>
+      </div>
+    </div>
+
     <modal :show-modal.sync="showProfile">
       <profile></profile>
     </modal>
@@ -35,10 +58,21 @@ export default {
     user() {
       return this.$store.state.user.user;
     },
+    days() {
+      const ms = Date.now() - new Date(this.user.since).getTime();
+      return Math.floor(ms / 1000 / 60 / 60 / 24);
+    },
   },
   methods: {
     toggleProfile() {
       this.showProfile = !this.showProfile;
+    },
+    logIn() {
+      this.$router.push({ name: 'mofu-login' });
+    },
+    logOut() {
+      localStorage.setItem('token', '');
+      document.location.href = '/login';
     },
   },
 };
@@ -65,5 +99,9 @@ export default {
   & img {
     border-radius: 50%;
   }
+}
+#mofu-menu {
+  margin-left: 10px;
+  padding-top: 0px;
 }
 </style>

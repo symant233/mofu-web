@@ -28,6 +28,11 @@ export default new Router({
       component: require('@/pages/Chat').default,
     },
     {
+      path: '/audit',
+      name: 'mofu-audit',
+      component: require('@/pages/Audit').default,
+    },
+    {
       path: '*',
       name: 'mofu-not-found',
       component: require('@/pages/NotFound').default,
