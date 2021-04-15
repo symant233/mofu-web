@@ -121,8 +121,8 @@ class Api {
     return rs.data;
   };
 
-  listAuditLogs = async (page, passwd) => {
-    const rs = await this.api.post('/audit', { page, passwd });
+  listAuditLogs = async (page) => {
+    const rs = await this.api.get(`/audit?page=${page}`, this.conf);
     return rs.data;
   };
 }

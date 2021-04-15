@@ -60,10 +60,12 @@ export default {
 
 <style lang="scss">
 #audit-navbar {
+  background: white;
+  z-index: 99;
   bottom: 3px;
   left: 4px;
   width: 100%;
-  position: absolute;
+  position: fixed;
   padding: 2px;
   border-top: ridge;
 }
