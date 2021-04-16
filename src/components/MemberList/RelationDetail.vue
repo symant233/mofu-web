@@ -15,16 +15,19 @@
         </div>
       </article>
     </div>
-    <input id="user-id" :value="user.id" disabled />
-    <button
-      class="clipboard"
-      @click="copy()"
-      data-clipboard-action="copy"
-      :data-clipboard-text="user.id"
-    >
-      <img src="/static/images/clippy.svg" alt="复制到剪切板" width="13" />
-    </button>
-    <p>成为好友已经 {{ days }} 天</p>
+    <div id="user-option">
+      🧊
+      <input id="user-id" :value="user.id" disabled />
+      <button
+        class="clipboard"
+        @click="copy()"
+        data-clipboard-action="copy"
+        :data-clipboard-text="user.id"
+      >
+        <img src="/static/images/clippy.svg" alt="复制到剪切板" width="13" />
+      </button>
+      <p id="user-time">⏱ 成为好友已经 {{ days }} 天</p>
+    </div>
   </div>
 </template>
 
@@ -77,6 +80,12 @@ export default {
   border-radius: 8px;
   margin: 10px;
   width: calc(100% - 20px);
+}
+#user-option {
+  margin: 11px;
+  #user-time {
+    padding: 5px 0;
+  }
 }
 .member-avatar {
   float: left;

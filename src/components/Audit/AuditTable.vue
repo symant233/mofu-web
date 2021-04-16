@@ -6,25 +6,24 @@
       v-if="!noLogs"
     >
       <thead>
-        <tr>
-          <!-- <th>
-              <abbr title="自增序号(不在数据库中)">序号</abbr>
-            </th> -->
-          <th style="width:233px">ID</th>
-          <th>IP地址</th>
-          <th style="width:42px">类</th>
-          <th>描述</th>
-          <th>载荷</th>
-          <th>时间</th>
+        <tr style="height:50px;">
+          <th class="audit-th" style="width:41px;">序</th>
+          <th class="audit-th" style="width:233px;">ID</th>
+          <th class="audit-th" style="width:100px;">IP地址</th>
+          <th class="audit-th" style="width:42px;">类</th>
+          <th class="audit-th" style="min-width:98px;">描述</th>
+          <th class="audit-th">载荷</th>
+          <th class="audit-th" style="width:197px;">时间</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="log in logs" :key="log._id" :id="'log-' + log._id">
+        <tr v-for="(log, index) in logs" :key="log._id" :id="'log-' + log._id">
+          <td>{{ serial(index) }}</td>
           <td>{{ log._id }}</td>
           <th>{{ log.ip }}</th>
           <td>{{ log.type }}</td>
           <th>{{ log.description }}</th>
-          <td>{{ log.payload }}</td>
+          <td class="audit-td">{{ log.payload }}</td>
           <td>
             {{ new Date(log.date).toLocaleString('zh-CN') }}
           </td>
@@ -62,8 +61,20 @@ export default {
   },
   methods: {
     async listAudit() {
-      const rs = await api.listAuditLogs(this.page);
-      this.logs = rs;
+      try {
+        const rs = await api.listAuditLogs(this.page);
+        this.logs = rs;
+      } catch (err) {
+        if (!err.response) return;
+        if (err.response.status === 401) {
+          this.$toast.error('[401] 没有权限.');
+          this.$router.push({ name: 'mofu-auth' });
+        }
+      }
+    },
+    serial(index) {
+      const offset = (this.page - 1) * 25;
+      return index + offset + 1;
     },
   },
   mounted() {
@@ -72,6 +83,7 @@ export default {
   watch: {
     async $route(to, from) {
       await this.listAudit();
+      await this.$nextTick();
     },
   },
 };
@@ -82,6 +94,12 @@ export default {
   padding-bottom: 51px;
   #audit-table {
     margin-bottom: 0px;
+    .audit-th {
+      padding-top: 12px;
+    }
+    .audit-td {
+      word-break: break-all;
+    }
   }
   .audit-wumpus {
     height: 90vh;

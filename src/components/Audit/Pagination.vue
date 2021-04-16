@@ -8,7 +8,7 @@
     </router-link>
     <ul class="pagination-list">
       <li>
-        <router-link class="pagination-link" :to="turn(0)">
+        <router-link class="pagination-link is-primary" :to="turn(0)">
           ❮
         </router-link>
       </li>
@@ -68,5 +68,10 @@ export default {
   position: fixed;
   padding: 2px;
   border-top: ridge;
+  .is-primary {
+    background-color: #00d1b2;
+    border-color: #00d1b2;
+    color: white;
+  }
 }
 </style>
