@@ -70,6 +70,12 @@ export default {
         } else {
           rs = await api.listGroupMessages(requestChannel, beforeMsgId);
         }
+        // 没有更多消息, 关闭加载按钮
+        if (rs.length === 0) {
+          this.$toast.info('没有更多消息', { timeout: 1500 });
+          this.$set(this.noMoreMsg, requestChannel, true);
+          return;
+        }
         this.end = rs[rs.length - 1].id;
         if (msgs) {
           this.msgs[requestChannel] = [...rs, ...msgs];
@@ -81,11 +87,6 @@ export default {
         if (err.response.status === 404) {
           this.$toast.warning('[404] 请求失败');
           this.routerToMe();
-        }
-        // 没有更多消息, 关闭加载按钮
-        if (err.response.status === 400) {
-          this.$toast.info('没有更多消息', { timeout: 1500 });
-          this.$set(this.noMoreMsg, requestChannel, true);
         }
       }
     },
@@ -135,7 +136,6 @@ export default {
     if (this.channel === '@me') {
       this.showInput = false;
       this.wumpus = true;
-      return;
     }
     this.listenMessages(); // socket 监听
   },
