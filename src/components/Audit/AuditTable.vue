@@ -96,6 +96,18 @@ export default {
     margin-bottom: 0px;
     .audit-th {
       padding-top: 12px;
+      position: sticky;
+      top: 0;
+      background: white;
+      border: unset;
+      &:after {
+        content: '';
+        position: absolute;
+        border-bottom: groove;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+      }
     }
     .audit-td {
       word-break: break-all;

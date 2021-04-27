@@ -21,8 +21,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-html {
-  overflow: overlay;
-}
-</style>
+<style></style>

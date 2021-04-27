@@ -11,6 +11,9 @@
           <a class="dropdown-item" @click="toggleProfile">
             📑 账号资料
           </a>
+          <a class="dropdown-item" @click="auditPage">
+            🔒 审计日志
+          </a>
           <hr class="dropdown-divider" />
           <a class="dropdown-item" @click="logIn">
             🔄 切换用户
@@ -68,11 +71,14 @@ export default {
       this.showProfile = !this.showProfile;
     },
     logIn() {
-      this.$router.push({ name: 'mofu-login' });
+      window.location.href = '/login';
     },
     logOut() {
       localStorage.setItem('token', '');
-      document.location.href = '/login';
+      window.location.href = '/login';
+    },
+    auditPage() {
+      this.$router.push({ name: 'mofu-audit' });
     },
   },
 };
