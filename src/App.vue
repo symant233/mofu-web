@@ -7,6 +7,25 @@
 <script>
 export default {
   name: 'App',
+  mounted() {
+    // 控制台展示环境
+    this.badge('Application', 'mofu-chat', '#1475b2');
+    this.badge('Environment', process.env.NODE_ENV, '#42c02e');
+  },
+  methods: {
+    badge(left, right, color) {
+      const arg = [
+        '%c '.concat(left, ' %c ').concat(right, ' '),
+        'padding:1px;border-radius:3px 0 0 3px;color:#fff;background:'.concat(
+          '#606060;',
+        ),
+        'padding:1px;border-radius:0 3px 3px 0;color:#fff;background:'.concat(
+          color,
+        ),
+      ];
+      console.log(...arg);
+    },
+  },
 };
 </script>
 

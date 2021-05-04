@@ -68,7 +68,7 @@ export default {
         this.$toast.warning('Socket已断开');
         if (process.env.NODE_ENV !== 'development') {
           socket.close();
-          this.$router.push({ name: 'mofu-auth' });
+          window.location.href = '/';
         }
       });
       socket.on('reconnect', () => {
@@ -88,7 +88,7 @@ export default {
     if (!token) {
       // this.setWarn('localStorage token not found!');
       this.$toast.error('localStorage token not found!');
-      this.$router.push({ name: 'mofu-login' });
+      window.location.href = '/';
     }
     this.socketListener();
     if (process.env.NODE_ENV !== 'development') socket.open();

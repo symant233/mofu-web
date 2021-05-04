@@ -26,7 +26,6 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 const ENV = process.env.NODE_ENV;
-console.log(`Environment: ${ENV}`);
 
 if (ENV === 'production') {
   // 生产环境启用 Sentry
