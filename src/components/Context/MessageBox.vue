@@ -91,7 +91,7 @@ export default {
   margin-top: 1.6px;
   float: left;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: overlay;
 }
 .m-messages {
   width: 100%;

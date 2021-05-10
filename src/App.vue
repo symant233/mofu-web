@@ -15,13 +15,9 @@ export default {
   methods: {
     badge(left, right, color) {
       const arg = [
-        '%c '.concat(left, ' %c ').concat(right, ' '),
-        'padding:1px;border-radius:3px 0 0 3px;color:#fff;background:'.concat(
-          '#606060;',
-        ),
-        'padding:1px;border-radius:0 3px 3px 0;color:#fff;background:'.concat(
-          color,
-        ),
+        `%c ${left} %c ${right} `,
+        'padding:1px;border-radius:3px 0 0 3px;color:#fff;background:#606060;',
+        `padding:1px;border-radius:0 3px 3px 0;color:#fff;background:${color}`,
       ];
       console.log(...arg);
     },
@@ -52,11 +48,16 @@ body {
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  background-color: #c1c1c1;
+  background-color: rgb(79 79 79 / 30%);
   border-color: transparent;
+  box-shadow: inset 1px 1px 0 rgb(0 0 0 / 10%), inset 0 -1px 0 rgb(0 0 0 / 7%);
+  border-width: 1px 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #777;
+  background-color: rgb(79 79 79 / 50%);
+}
+::-webkit-scrollbar-thumb:active {
+  background-color: rgb(79 79 79 / 60%);
 }
 *.unselectable {
   -moz-user-select: none;
