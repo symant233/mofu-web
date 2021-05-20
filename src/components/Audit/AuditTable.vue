@@ -9,7 +9,9 @@
         <tr style="height:50px;">
           <th class="audit-th" style="width:41px;">序</th>
           <th class="audit-th" style="width:233px;">ID</th>
-          <th class="audit-th" style="width:100px;">IP地址</th>
+          <th class="audit-th" style="width:100px;">
+            <abbr title="双击屏蔽IP来源">IP地址</abbr>
+          </th>
           <th class="audit-th" style="width:42px;">类</th>
           <th class="audit-th" style="min-width:98px;">描述</th>
           <th class="audit-th">载荷</th>
@@ -20,7 +22,7 @@
         <tr v-for="(log, index) in logs" :key="log._id" :id="'log-' + log._id">
           <td>{{ serial(index) }}</td>
           <td>{{ log._id }}</td>
-          <th>{{ log.ip }}</th>
+          <th @dblclick="block(log)">{{ log.ip }}</th>
           <td>{{ log.type }}</td>
           <th>{{ log.description }}</th>
           <td class="audit-td">{{ log.payload }}</td>
@@ -75,6 +77,18 @@ export default {
     serial(index) {
       const offset = (this.page - 1) * 25;
       return index + offset + 1;
+    },
+    async block(log) {
+      try {
+        const rs = await api.ipBlock(log.ip, log.description);
+        this.$toast.success(`${log.ip}已屏蔽`);
+      } catch (err) {
+        if (err.response.status === 400) {
+          this.$toast.error(`${log.ip}不可重复屏蔽`);
+        } else {
+          this.$toast.error('屏蔽操作失败');
+        }
+      }
     },
   },
   mounted() {

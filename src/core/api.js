@@ -121,8 +121,14 @@ class Api {
     return rs.data;
   };
 
+  // ! Audit
   listAuditLogs = async (page) => {
     const rs = await this.api.get(`/audit?page=${page}`, this.conf);
+    return rs.data;
+  };
+
+  ipBlock = async (ip, msg) => {
+    const rs = await this.api.post('/audit/block', { ip, msg }, this.conf);
     return rs.data;
   };
 }
