@@ -7,15 +7,15 @@
     >
       <thead>
         <tr style="height:50px;">
-          <th class="audit-th" style="width:41px;">序</th>
-          <th class="audit-th" style="width:233px;">ID</th>
+          <th class="audit-th" style="width:40px;">序</th>
+          <th class="audit-th" style="width:222px;">ID</th>
           <th class="audit-th" style="width:100px;">
             <abbr title="双击屏蔽IP来源">IP地址</abbr>
           </th>
-          <th class="audit-th" style="width:42px;">类</th>
-          <th class="audit-th" style="min-width:98px;">描述</th>
+          <th class="audit-th" style="width:40px;">类</th>
+          <th class="audit-th" style="width:168px;">描述</th>
           <th class="audit-th">载荷</th>
-          <th class="audit-th" style="width:197px;">时间</th>
+          <th class="audit-th" style="width:188px;">时间</th>
         </tr>
       </thead>
       <tbody>
