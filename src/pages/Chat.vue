@@ -109,13 +109,13 @@ export default {
 .g-main {
   height: 100vh;
   display: grid;
-  grid-template-columns: 3.6rem 16rem 1fr 15rem;
+  grid-template-columns: 3.6rem 1fr 3.2fr 15rem;
   grid-template-areas: 'nav-bar side-bar context member-list';
   background-color: #ffffff;
 }
 @media screen and (max-width: 925px) {
   .g-main {
-    grid-template-columns: 3.6rem 15rem 1fr;
+    grid-template-columns: 3.6rem 1fr 2.3fr;
     grid-template-areas: 'nav-bar side-bar context';
   }
 }
