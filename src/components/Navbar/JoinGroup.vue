@@ -54,10 +54,10 @@
         </div>
         <footer class="card-footer">
           <p class="card-footer-item" @click="joinDevGroup">
-            <a><span>加入开发者频道</span></a>
+            <span>加入开发者频道</span>
           </p>
           <p class="card-footer-item" @click="toggleModal">
-            <a><span>取消</span></a>
+            <span>取消</span>
           </p>
         </footer>
       </div>
@@ -133,6 +133,15 @@ export default {
   margin-top: auto;
   #join-user {
     padding-top: 7px;
+  }
+  .modal-content {
+    border-radius: 0.3rem;
+  }
+  .card-footer > .card-footer-item {
+    cursor: pointer;
+    span {
+      color: cornflowerblue;
+    }
   }
 }
 #mofu-join-button {

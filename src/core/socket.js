@@ -3,6 +3,7 @@ import { WS } from './constants';
 
 const option = {
   autoConnect: false,
+  path: '/ws',
 };
 
 if (process.env.NODE_ENV === 'development') {
