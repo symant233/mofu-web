@@ -70,10 +70,10 @@ export default {
       if (this.msgs && this.msgs.length === 0) return;
       if (this.msgs.length <= api.MSGLIMIT || this.end === '') {
         this.$nextTick(this.scrollRear);
-      } else if (this.end) {
+      } else if (this.end !== '') {
         this.$nextTick(() => {
           document.getElementById(this.end).scrollIntoView();
-          this.$el.scrollBy(0, 24); // 高度补偿
+          this.$el.scrollBy(0, 26); // 高度补偿
           this.$emit('update:end', '');
         });
       }

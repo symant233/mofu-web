@@ -70,10 +70,12 @@ export default {
       right: 0;
       width: 15rem;
       margin-top: 52px;
-      height: calc(100vh - 52px);
+      height: calc(100vh - 54px);
       display: none;
       &.active {
         display: block;
+        border-radius: 4px 0px 0px 4px;
+        box-shadow: -1px 1px 8px 0px rgba(179, 179, 179, 0.8);
       }
     }
   }

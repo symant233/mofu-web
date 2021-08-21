@@ -16,6 +16,9 @@ Vue.mixin({
         hour12: false,
       });
     },
+    setTitle(string) {
+      document.title = string || 'mofu-chat';
+    },
   },
   computed: {
     channel() {

@@ -23,6 +23,7 @@
         @click="copy()"
         data-clipboard-action="copy"
         :data-clipboard-text="user.id"
+        style="width: 27px;"
       >
         <img src="/static/images/clippy.svg" alt="复制到剪切板" width="13" />
       </button>
@@ -83,6 +84,9 @@ export default {
 }
 #user-option {
   margin: 11px;
+  #user-id {
+    width: 158px;
+  }
   #user-time {
     padding: 5px 0;
   }

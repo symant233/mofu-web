@@ -4,10 +4,11 @@
     <wumpus v-show="wumpus"></wumpus>
 
     <message-box :msgs="msgs[channel]" :end.sync="end" :key="channel">
-      <button-loader
+      <scroll-loader
         :loader-method="loadMoreMessages"
+        :loader-enabled="loaderEnabled"
         v-if="!noMoreMsg[channel] && showLoader && showInput"
-      ></button-loader>
+      ></scroll-loader>
     </message-box>
 
     <chat-input :show-input="showInput"></chat-input>
@@ -21,7 +22,7 @@ import api from '../core/api';
 import socket from '../core/socket';
 import GroupTitle from './Context/GroupTitle';
 import MessageBox from './Context/MessageBox';
-import ButtonLoader from './Plugins/ButtonLoader';
+import ScrollLoader from './Plugins/ScrollLoader';
 import Wumpus from './Context/Wumpus';
 import ChatInput from './Context/ChatInput';
 import Typing from './Context/Typing';
@@ -32,7 +33,7 @@ export default {
     GroupTitle,
     MessageBox,
     Wumpus,
-    ButtonLoader,
+    ScrollLoader,
     ChatInput,
     Typing,
   },
@@ -44,6 +45,7 @@ export default {
       noMoreMsg: {}, // props
       end: '', // props 用来滚动的id
       showLoader: false, // props
+      loaderEnabled: true,
     };
   },
   computed: {
@@ -53,8 +55,12 @@ export default {
   },
   methods: {
     async loadMoreMessages() {
+      this.loaderEnabled = false;
       const before = this.messages ? this.messages[0].id : '';
       await this.listMessages(before);
+      this.$nextTick(() => {
+        this.loaderEnabled = true;
+      });
     },
     routerToMe() {
       this.$router.push({ name: 'mofu-chat', params: { channel: '@me' } });
@@ -72,7 +78,7 @@ export default {
         }
         // 没有更多消息, 关闭加载按钮
         if (rs.length === 0) {
-          this.$toast.info('没有更多消息', { timeout: 1500 });
+          // this.$toast.info('没有更多消息', { timeout: 1500 });
           this.$set(this.noMoreMsg, requestChannel, true);
           return;
         }

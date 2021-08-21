@@ -15,7 +15,7 @@
           <th class="audit-th" style="width:40px;">类</th>
           <th class="audit-th" style="width:168px;">描述</th>
           <th class="audit-th">载荷</th>
-          <th class="audit-th" style="width:188px;">时间</th>
+          <th class="audit-th" style="width:201px">时间</th>
         </tr>
       </thead>
       <tbody>

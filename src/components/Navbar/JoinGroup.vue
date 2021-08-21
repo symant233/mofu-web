@@ -136,6 +136,7 @@ export default {
   }
   .modal-content {
     border-radius: 0.3rem;
+    box-shadow: 0 0 10px 0px rgba($color: #000000, $alpha: 0.7);
   }
   .card-footer > .card-footer-item {
     cursor: pointer;

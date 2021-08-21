@@ -1,15 +1,11 @@
 <template>
-  <div
-    id="button-loader"
-    v-if="loaderEnabled"
-    @click="loaderMethod"
-    class="unselectable"
-  >
+  <div id="button-loader" @click="loaderMethod" class="unselectable">
     加载更多
   </div>
 </template>
 
 <script>
+// deprecated component
 export default {
   name: 'button-loader',
   props: {

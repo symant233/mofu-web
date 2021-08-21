@@ -23,6 +23,9 @@ export default {
       return t;
     },
   },
+  updated() {
+    this.setTitle(this.title);
+  },
 };
 </script>
 

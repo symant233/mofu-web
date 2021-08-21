@@ -1,10 +1,10 @@
 <template>
-  <span id="loader"></span>
+  <div id="loader">
+    <span id="loading"></span>
+  </div>
 </template>
 
 <script>
-// deprecated component
-
 export default {
   name: 'scroll-loader',
   props: {
@@ -14,7 +14,7 @@ export default {
     },
     'loader-enabled': {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   data() {
@@ -22,6 +22,9 @@ export default {
       loading: false,
       size: 70,
     };
+  },
+  mounted() {
+    this.observer.observe(this.$el);
   },
   methods: {
     async load(entries, observer) {
@@ -39,7 +42,7 @@ export default {
       return {
         root: document.body,
         rootMargin: '0px',
-        threshold: 0.1,
+        threshold: 0.7,
       };
     },
     observer() {
@@ -49,10 +52,8 @@ export default {
   watch: {
     loaderEnabled(newV, oldV) {
       if (newV === false) {
-        console.log('[-] unobserve loader...');
         this.observer.unobserve(this.$el);
       } else if (newV === true) {
-        console.log('[+] observing loader...');
         this.observer.observe(this.$el);
       }
     },
@@ -61,21 +62,25 @@ export default {
 </script>
 
 <style lang="scss">
-.loader {
-  margin: auto;
-  border: 5px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 5px solid #3498db;
-  width: 30px;
-  height: 30px;
-  animation: spin 0.5s linear infinite;
-}
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
+#loader {
+  padding: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  #loading {
+    width: 28px;
+    height: 28px;
+    display: inline-block;
+    border: 4px solid rgba(189, 189, 189, 0.25);
+    border-left-color: rgba(3, 155, 229, 0.8);
+    border-top-color: rgba(3, 155, 229, 0.9);
+    border-radius: 50%;
+    animation: loading-rotate 600ms infinite linear;
   }
-  100% {
-    transform: rotate(360deg);
+}
+@keyframes loading-rotate {
+  to {
+    transform: rotate(1turn);
   }
 }
 </style>
