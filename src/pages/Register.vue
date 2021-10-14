@@ -3,7 +3,7 @@
     <div class="container">
       <form @submit.prevent="register">
         <h2 class="title is-3 has-text-centered has-text-weight-bold">
-          Register
+          Sign up
         </h2>
         <!-- nickname -->
         <div class="field">
@@ -164,8 +164,18 @@ export default {
   margin: auto;
   max-width: 415px;
   overflow-y: hidden;
-  padding: 30px 50px;
+  padding: 45px 40px 30px 40px;
   box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 20%);
+}
+.container:before {
+  content: '';
+  width: 100%;
+  height: 8px;
+  background: linear-gradient(45deg, #ec5151, #537efd);
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .title {
   margin-bottom: 1.5rem;
