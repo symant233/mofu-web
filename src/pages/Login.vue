@@ -179,8 +179,7 @@ export default {
   color: black;
 }
 .auth-bg {
-  background: #f2f1f3 url(/static/images/telegram.jpg);
-  background-size: 86rem;
+  background: #f2f1f3 url(/static/images/floor-tile.png);
   position: fixed;
   top: 0;
   left: 0;

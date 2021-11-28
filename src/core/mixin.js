@@ -17,7 +17,7 @@ Vue.mixin({
       });
     },
     setTitle(string) {
-      document.title = string || 'mofu-chat';
+      document.title = string || 'mofu-web';
     },
   },
   computed: {

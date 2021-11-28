@@ -1,5 +1,9 @@
 # mofu-web
 
+![server status](https://img.shields.io/uptimerobot/status/m789019134-1a8d105ea9006406ff155b2e?label=Status&color=00B0D8&logo=probot&logoColor=white)
+
+production deployment at [`https://chat.mofu.ltd`](https://chat.mofu.ltd)
+
 > A mofumofu server for online chat! 🦊 (web part)
 
 ## Current progresses

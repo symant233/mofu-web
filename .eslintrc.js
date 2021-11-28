@@ -58,5 +58,6 @@ module.exports = {
     'no-console': 0,
     'linebreak-style': 0,
     'no-shadow': ['error', { allow: ['state'] }],
+    'max-len': ['error', { ignorePattern: 'data:image/jpg;base64.+' }],
   },
 };
